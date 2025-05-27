@@ -5,6 +5,7 @@ import org.example.backend.model.record.Perfume;
 import org.example.backend.model.record.PerfumeVariant;
 
 public record PerfumePlpDto(
+        String id,
         String name,
         String imageURL,
         float price,
@@ -12,6 +13,7 @@ public record PerfumePlpDto(
 ) {
     public PerfumePlpDto(Perfume perfume) {
         this(
+                perfume.id(),
                 perfume.name(),
                 perfume.imageURL(),
                 perfume.variants().stream()
