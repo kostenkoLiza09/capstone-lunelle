@@ -5,14 +5,14 @@ import org.example.backend.model.record.PerfumeVariant;
 
 import java.util.List;
 
-public record ParfumeDto (String Id,
+public record PerfumeDto (
                          String name,
                          String imageURL,
                          String description,
                          List<PerfumeVariant> variants,
                          Selection selection,
                          Brand brand,
-                         PerfumeFamily Parfumefamily,
+                         PerfumeFamily perfumeFamily,
                          List<Season> seasons,
                          List<Notes> notes){
 }

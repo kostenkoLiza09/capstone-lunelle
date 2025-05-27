@@ -9,7 +9,7 @@ import java.util.List;
 @Document(collection = "perfumes")
 public record Perfume(
         @Id
-        String Id,
+        String id,
         String name,
         String imageURL,
         String description,
