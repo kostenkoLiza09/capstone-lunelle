@@ -55,4 +55,9 @@ public class PerfumeService {
                 .orElseThrow(() -> new PerfumeNotFoundException("Perfume with" + id + "is not found"));
         perfumeRepository.delete(perfume);
     }
+
+    public Perfume findById(String id){
+        return perfumeRepository.findById(id)
+                .orElseThrow(() -> new PerfumeNotFoundException("Perfume with" + id + "is not found"));
+    }
 }

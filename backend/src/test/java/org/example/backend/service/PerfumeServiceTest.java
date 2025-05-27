@@ -117,4 +117,19 @@ class PerfumeServiceTest {
         verify(perfumeRepository).delete(perfume);
 
     }
+
+    @Test
+    void findByIdPerfume (){
+        String perfumeId = "id";
+        Perfume perfume = new Perfume(perfumeId, "name", "imageURL", "description",
+                List.of(new PerfumeVariant(Volume.ML30, 49.99f)), Selection.WOMAN,
+                Brand.ARMANI, PerfumeFamily.AROMATIC, List.of(Season.WINTER, Season.AUTUMN),
+                List.of(Notes.AQUATIC, Notes.VANILLA)
+        );
+
+        when(perfumeRepository.findById(perfumeId)).thenReturn(Optional.of(perfume));
+        Perfume result = perfumeService.findById(perfumeId);
+        assertEquals(perfume, result);
+        verify(perfumeRepository).findById(perfumeId);
+    }
 }
