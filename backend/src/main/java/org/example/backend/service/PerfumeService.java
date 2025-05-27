@@ -2,6 +2,7 @@ package org.example.backend.service;
 
 import org.example.backend.exception.PerfumeNotFoundException;
 import org.example.backend.model.dto.PerfumeDto;
+import org.example.backend.model.plp.PerfumePlpDto;
 import org.example.backend.model.record.Perfume;
 import org.example.backend.repository.PerfumeRepository;
 import org.springframework.stereotype.Service;
@@ -63,7 +64,9 @@ public class PerfumeService {
                 .orElseThrow(() -> new PerfumeNotFoundException("Perfume with" + id + "is not found"));
     }
 
-    public List<Perfume> findAll(){
-        return perfumeRepository.findAll();
+    public List<PerfumePlpDto> findAllPlp() {
+        return perfumeRepository.findAll().stream()
+                .map(PerfumePlpDto::new)
+                .toList();
     }
 }
