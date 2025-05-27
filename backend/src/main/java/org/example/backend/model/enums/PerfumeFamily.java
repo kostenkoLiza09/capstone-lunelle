@@ -3,7 +3,7 @@ package org.example.backend.model.enums;
 import lombok.Getter;
 
 @Getter
-public enum ParfumeFamily {
+public enum PerfumeFamily {
 
     FLORAL("Floral"),
     WOODY("Woody"),
@@ -18,7 +18,7 @@ public enum ParfumeFamily {
 
     private final String familyName;
 
-    ParfumeFamily(String familyName) {
+    PerfumeFamily(String familyName) {
         this.familyName = familyName;
     }
 }
