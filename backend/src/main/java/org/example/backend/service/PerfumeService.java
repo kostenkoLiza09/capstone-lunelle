@@ -1,5 +1,6 @@
 package org.example.backend.service;
 
+import org.example.backend.exception.PerfumeNotFoundException;
 import org.example.backend.model.dto.PerfumeDto;
 import org.example.backend.model.record.Perfume;
 import org.example.backend.repository.PerfumeRepository;
@@ -28,5 +29,24 @@ public class PerfumeService {
                 perfumeDto.notes()
         );
         return perfumeRepository.save(perfume);
+    }
+
+    public Perfume updatePerfume( String id,PerfumeDto perfumeDto){
+        Perfume oldData = perfumeRepository.findById(id)
+                .orElseThrow(() -> new PerfumeNotFoundException("Perfume is not found"));
+
+        Perfume newData = new Perfume(
+                oldData.id(),
+                perfumeDto.name(),
+                perfumeDto.imageURL(),
+                perfumeDto.description(),
+                perfumeDto.variants(),
+                perfumeDto.selection(),
+                perfumeDto.brand(),
+                perfumeDto.perfumeFamily(),
+                perfumeDto.seasons(),
+                perfumeDto.notes()
+        );
+        return perfumeRepository.save(newData);
     }
 }

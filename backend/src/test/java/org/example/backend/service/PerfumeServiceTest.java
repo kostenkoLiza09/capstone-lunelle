@@ -9,9 +9,11 @@ import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentMatchers;
 
 import java.util.List;
+import java.util.Optional;
 
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.*;
 
 
@@ -61,13 +63,40 @@ class PerfumeServiceTest {
         Perfume result = perfumeService.addPerfume(perfume);
         verify(perfumeRepository).save(ArgumentMatchers.any(Perfume.class));
         assertEquals(expected, result);
-
-
-
-
-
-
-
     }
 
+
+    @Test
+    void updatePerfume(){
+        PerfumeRepository perfumeRepository = mock(PerfumeRepository.class);
+        PerfumeService perfumeService = new PerfumeService(perfumeRepository);
+
+        List<PerfumeVariant> variants = List.of(new PerfumeVariant(Volume.ML20, 50.9f));
+        List<Season> seasons = List.of(Season.WINTER, Season.SPRING);
+        List<Notes> notes = List.of(Notes.MUSK, Notes.OUD);
+
+        Perfume oldData = new Perfume("id", "name", "imageURL" , "description",
+                variants, Selection.WOMAN, Brand.ARMANI, PerfumeFamily.AROMATIC, seasons, notes);
+
+        List<PerfumeVariant> newVariants = List.of(
+                new PerfumeVariant(Volume.ML50, 50.99f)
+        );
+        List<Season> newSeasons = List.of(Season.ALL);
+        List<Notes> newNotes = List.of(Notes.JASMINE, Notes.BERGAMOT);
+
+        PerfumeDto updateData = new PerfumeDto(
+                "name", "imageURL" , "description",
+                newVariants, Selection.WOMAN, Brand.ARMANI, PerfumeFamily.AROMATIC,
+                newSeasons, newNotes);
+
+        Perfume updatedData = new Perfume("id", "name", "imageURL" , "description",
+                newVariants, Selection.WOMAN, Brand.ARMANI, PerfumeFamily.AROMATIC, newSeasons, newNotes);
+
+        when(perfumeRepository.findById("id")).thenReturn(Optional.of(oldData));
+        when(perfumeRepository.save(any(Perfume.class))).thenReturn(updatedData);
+
+        Perfume result = perfumeService.updatePerfume("id", updateData);
+        assertNotNull(result);
+        verify(perfumeRepository).save(any(Perfume.class));
+    }
 }
