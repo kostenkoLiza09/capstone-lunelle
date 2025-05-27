@@ -6,6 +6,8 @@ import org.example.backend.model.record.Perfume;
 import org.example.backend.repository.PerfumeRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class PerfumeService {
 
@@ -59,5 +61,9 @@ public class PerfumeService {
     public Perfume findById(String id){
         return perfumeRepository.findById(id)
                 .orElseThrow(() -> new PerfumeNotFoundException("Perfume with" + id + "is not found"));
+    }
+
+    public List<Perfume> findAll(){
+        return perfumeRepository.findAll();
     }
 }

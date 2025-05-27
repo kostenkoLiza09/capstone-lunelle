@@ -132,4 +132,19 @@ class PerfumeServiceTest {
         assertEquals(perfume, result);
         verify(perfumeRepository).findById(perfumeId);
     }
+
+    @Test
+    void findAll(){
+        List<Perfume> listPerfume = List.of(new Perfume("id1", "name1", "imageURL1", "description1",
+                List.of(new PerfumeVariant(Volume.ML30, 49.99f)), Selection.WOMAN, Brand.ARMANI, PerfumeFamily.AROMATIC, List.of(Season.WINTER, Season.AUTUMN),
+                List.of(Notes.AQUATIC, Notes.VANILLA)),
+                new Perfume("id2", "name2", "imageURL2", "description2", List.of(new PerfumeVariant(Volume.ML50, 50.99f)), Selection.MAN,
+                        Brand.ARMANI, PerfumeFamily.AROMATIC, List.of(Season.SUMMER, Season.AUTUMN), List.of(Notes.COFFEE, Notes.ROSE)));
+        when(perfumeRepository.findAll()).thenReturn(listPerfume);
+        List<Perfume> result = perfumeService.findAll();
+        assertEquals(listPerfume, result);
+        verify(perfumeRepository).findAll();
+    }
+
+
 }
