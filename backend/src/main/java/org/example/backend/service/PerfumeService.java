@@ -49,4 +49,10 @@ public class PerfumeService {
         );
         return perfumeRepository.save(newData);
     }
+
+    public void deletePerfume (String id){
+        Perfume perfume = perfumeRepository.findById(id)
+                .orElseThrow(() -> new PerfumeNotFoundException("Perfume with" + id + "is not found"));
+        perfumeRepository.delete(perfume);
+    }
 }
