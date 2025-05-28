@@ -1,9 +1,9 @@
 import './Header.css';
-import searchIcon from '../../assets/images/home/Search.svg';
-import loginIcon from '../../assets/images/home/Login.svg';
-import likeIcon from '../../assets/images/home/Like.svg';
-import basketIcon from '../../assets/images/home/Basket.svg';
-import logoIcon from '../../assets/images/home/Logo.svg';
+import searchIcon from '../../assets/images/header/Search.svg';
+import loginIcon from '../../assets/images/header/Login.svg';
+import likeIcon from '../../assets/images/header/Like.svg';
+import basketIcon from '../../assets/images/header/Basket.svg';
+import logoIcon from '../../assets/images/header/Logo.svg';
 
 
 export default function Header(){
