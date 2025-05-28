@@ -14,10 +14,9 @@ import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 
 
 import java.util.List;
@@ -52,7 +51,7 @@ class PerfumeControllerTest {
                 new PerfumePlpDto("id2", "name2", "imageURL2", 59.99f, Volume.ML20)
     );
 
-        Mockito.when(perfumeService.findAllPlp()).thenReturn(perfumes);
+        when(perfumeService.findAllPlp()).thenReturn(perfumes);
         mockMvc.perform(get("/api/perfumes"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].name", is("name1")))
@@ -94,7 +93,7 @@ class PerfumeControllerTest {
                 List.of(Notes.AQUATIC, Notes.VANILLA)
         );
 
-        Mockito.when(perfumeService.addPerfume(Mockito.any())).thenReturn(createdPerfume);
+        when(perfumeService.addPerfume(Mockito.any())).thenReturn(createdPerfume);
 
         mockMvc.perform(post("/api/add")
                         .contentType("application/json")
@@ -128,7 +127,7 @@ class PerfumeControllerTest {
                 Selection.WOMAN, Brand.ARMANI, PerfumeFamily.AROMATIC, List.of(Season.SPRING, Season.SUMMER),
                 List.of(Notes.AQUATIC, Notes.VANILLA));
 
-        Mockito.when(perfumeService.updatePerfume(Mockito.eq(id), Mockito.any())).thenReturn(perfume);
+        when(perfumeService.updatePerfume(Mockito.eq(id), Mockito.any())).thenReturn(perfume);
 
         mockMvc.perform(put("/api/update/" + id)
                         .contentType(MediaType.APPLICATION_JSON)
@@ -137,5 +136,27 @@ class PerfumeControllerTest {
                 .andExpect(status().isOk());
     }
 
+    @Test
+    void deletePerfume() throws Exception {
+        String id = "id1";
+        Mockito.doNothing().when(perfumeService).deletePerfume(id);
+        mockMvc.perform(delete("/api/delete/" + id))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    void findById () throws Exception {
+        String id = "id1";
+        Perfume perfume = new Perfume(id, "Name3", "imageURL", "description",
+                List.of(new PerfumeVariant(Volume.ML30, 49.99f), new PerfumeVariant(Volume.ML50, 59.99f)),
+                Selection.WOMAN, Brand.ARMANI, PerfumeFamily.AROMATIC, List.of(Season.SPRING, Season.SUMMER),
+                List.of(Notes.AQUATIC, Notes.VANILLA));
+        when(perfumeService.findById(id)).thenReturn(perfume);
+
+        mockMvc.perform(get("/api/find/" + id))
+                .andExpect(jsonPath("$.id", is(id)))
+                .andExpect(status().isOk());
+
+    }
 
 }
