@@ -3,6 +3,7 @@ package org.example.backend.service;
 import org.example.backend.exception.PerfumeNotFoundException;
 import org.example.backend.model.dto.PerfumeDto;
 import org.example.backend.model.enums.*;
+import org.example.backend.model.plp.PerfumePlpDto;
 import org.example.backend.model.record.Perfume;
 import org.example.backend.model.record.PerfumeVariant;
 import org.example.backend.repository.PerfumeRepository;
@@ -134,17 +135,32 @@ class PerfumeServiceTest {
     }
 
     @Test
-    void findAll(){
-        List<Perfume> listPerfume = List.of(new Perfume("id1", "name1", "imageURL1", "description1",
-                List.of(new PerfumeVariant(Volume.ML30, 49.99f)), Selection.WOMAN, Brand.ARMANI, PerfumeFamily.AROMATIC, List.of(Season.WINTER, Season.AUTUMN),
-                List.of(Notes.AQUATIC, Notes.VANILLA)),
-                new Perfume("id2", "name2", "imageURL2", "description2", List.of(new PerfumeVariant(Volume.ML50, 50.99f)), Selection.MAN,
-                        Brand.ARMANI, PerfumeFamily.AROMATIC, List.of(Season.SUMMER, Season.AUTUMN), List.of(Notes.COFFEE, Notes.ROSE)));
+    void findAllPlpList(){
+        List<Perfume> listPerfume = List.of(
+                new Perfume("id1", "name1", "imageURL1", "description1",
+                        List.of(new PerfumeVariant(Volume.ML30, 49.99f)), Selection.WOMAN, Brand.ARMANI,
+                        PerfumeFamily.AROMATIC, List.of(Season.WINTER, Season.AUTUMN), List.of(Notes.AQUATIC, Notes.VANILLA)),
+                new Perfume("id2", "name2", "imageURL2", "description2",
+                        List.of(new PerfumeVariant(Volume.ML50, 50.99f)), Selection.MAN, Brand.ARMANI,
+                        PerfumeFamily.AROMATIC, List.of(Season.SUMMER, Season.AUTUMN), List.of(Notes.COFFEE, Notes.ROSE))
+        );
         when(perfumeRepository.findAll()).thenReturn(listPerfume);
-        List<Perfume> result = perfumeService.findAll();
-        assertEquals(listPerfume, result);
+
+        List<PerfumePlpDto> result = perfumeService.findAllPlp();
+
+        assertEquals(2, result.size());
+        PerfumePlpDto firstDto = result.get(0);
+        assertEquals("name1", firstDto.name());
+        assertEquals("imageURL1", firstDto.imageURL());
+        assertEquals(49.99f, firstDto.price());
+        assertEquals(Volume.ML30, firstDto.volume());
+
+        PerfumePlpDto secondDto = result.get(1);
+        assertEquals("name2", secondDto.name());
+        assertEquals("imageURL2", secondDto.imageURL());
+        assertEquals(50.99f, secondDto.price());
+        assertEquals(Volume.ML50, secondDto.volume());
+
         verify(perfumeRepository).findAll();
     }
-
-
 }

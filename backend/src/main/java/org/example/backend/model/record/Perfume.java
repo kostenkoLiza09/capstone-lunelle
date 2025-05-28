@@ -16,7 +16,7 @@ public record Perfume(
         List<PerfumeVariant> variants,
         Selection selection,
         Brand brand,
-        PerfumeFamily Perfumefamily,
+        PerfumeFamily perfumeFamily,
         List<Season> seasons,
         List<Notes> notes
 ) {
