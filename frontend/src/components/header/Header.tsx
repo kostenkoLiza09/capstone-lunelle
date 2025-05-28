@@ -41,7 +41,7 @@ export default function Header(){
                 </div>
 
                 <div className={"nav-bar"}>
-                    <a href="/contact">New</a>
+                    <a href="/new">New</a>
                     <a href="/collection">Full Collection</a>
                     <a href="/women">Women</a>
                     <a href="/men">Men</a>
