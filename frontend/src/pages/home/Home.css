@@ -31,20 +31,26 @@
     }
 
     .mainImg h4 {
+        font-family: FancyCutPro,Times New Roman,serif;
+        font-weight: 100;
+        letter-spacing: .03125rem;
         margin-top: 1px;
         font-size: 15px;
         color: #555;
         text-align: center;
-        font-weight: lighter;
     }
 
 
     .mainImg a {
-        margin-top: 1px;
         text-decoration: none;
-        color: black;
-        border-bottom: 1px solid black;
-        text-align: center;
+        font-size: 13px;
+        transition: color 0.2s ease, border-bottom-color 0.2s ease;
+        color: #A9A9A9;
+        border-bottom: 1px solid rgba(169, 169, 169, 1);
+    }
+    .mainImg a:hover {
+        color: #0ABAB5;
+        border-bottom-color: rgba(169, 169, 169, 0);
     }
 
     .gender-section {
@@ -79,8 +85,18 @@
         text-transform: uppercase;
         font-weight: lighter;
         text-align: center;
+        color: black;
+        text-decoration: none;
+        transition: color 0.2s ease;
+    }
 
+    .gender-section h3:hover {
+color: #0ABAB5;
+    }
 
+    .gender-section a{
+        text-decoration: none;
+        color: black;
     }
 
     .miniature-img img {
@@ -90,7 +106,6 @@
         display: block;
         object-fit: cover;
     }
-
     .miniature-set {
         text-align: center;
         padding: 0 100px;
@@ -104,16 +119,30 @@
     }
 
     .miniature-set p {
-        margin: 15px 20px;
-        font-size: 14px;
+        margin: 10px 10px;
+        font-family: FancyCutPro,Times New Roman,serif;
+        font-size: 17px;
+        font-weight: 100;
+        letter-spacing: .03125rem;
+        line-height: 1.4;
     }
 
     .miniature-set a {
         display: inline-block;
         text-decoration: none;
-        color: black;
-        border-bottom: 1px solid black;
+        text-align: center;
+        font-size: 13px;
+        color: #A9A9A9;
+        transition: color 0.2s ease, border-bottom-color 0.2s ease;
+        border-bottom: 1px solid rgba(169, 169, 169, 1);
+
     }
+
+    .miniature-set a:hover {
+        color: #0ABAB5;
+        border-bottom-color: rgba(169, 169, 169, 0);
+    }
+
 
     .perfume-grid {
         margin-top: 50px;
@@ -126,6 +155,7 @@
     }
 
     .perfume-card {
+        cursor: pointer;
         flex: 0 0 220px;
         background-color: #fff;
         padding: 1.9rem;
@@ -149,10 +179,11 @@
     }
 
     .perfume-card h3 {
-        font-size: 11px;
-        margin: 1rem 0 0.5rem;
-        color: #333;
-        font-weight: bolder;
+        font-family: FancyCutPro,Times New Roman,serif;
+        font-size: 13px;
+        font-weight: 100;
+        letter-spacing: .03125rem;
+        line-height: 1.4;
         text-align: left;
 
         white-space: nowrap;
@@ -185,5 +216,54 @@
         color: #fff;
 
     }
+    .article {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 40px;
+        padding: 60px 20px;
+    }
+
+    .article img {
+        max-width: 100%;
+        max-height: 100%;
+        height: auto;
+    }
+
+    .article-content {
+        max-width: 500px;
+    }
+
+    .article h1 {
+        font-size: 28px;
+        margin-bottom: 20px;
+    }
+
+    .article p {
+        font-family: FancyCutPro,Times New Roman,serif;
+        font-size: 16px;
+        font-weight: 100;
+        letter-spacing: .03125rem;
+        line-height: 1.6;
+        color: #333;
+        margin-bottom: 20px;
+    }
+
+    .article a {
+        font-size: 13px;
+        text-align: center;
+        color: #A9A9A9;
+        text-decoration: none;
+        border-bottom: 1px solid rgba(169, 169, 169, 1);
+        transition: color 0.2s ease, border-color 0.2s ease;
+    }
+
+    .article a:hover {
+        color: #0ABAB5;
+        border-bottom-color: rgba(169, 169, 169, 0);
+    }
+
+
+
 }
 
