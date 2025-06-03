@@ -3,6 +3,7 @@ import Her from "../../assets/images/home/Her.jpg";
 import Him from "../../assets/images/home/Him.jpg";
 import Perfumes from "../../assets/images/home/Perfumes.jpg";
 import Article from "../../assets/images/home/Dua_Lipa.jpg";
+import TomFord from "../../assets/images/home/TomFord.jpg";
 import "./Home.css";
 import type {PerfumesPlp} from "../../interfaces/PerfumesPlp.ts";
 
@@ -105,6 +106,22 @@ export default function Home() {
                     <a href="#">View Product</a>
                 </div>
             </div>
+            <div className="section">
+                <img src={TomFord} alt="For her" />
+                <div className="text-columns">
+                    <div className="column">
+                        <h1>BRANDS</h1>
+                        <p>You can choose your favorite brand to find the perfect fragrance just for you</p>
+                        <a href="#">View more</a>
+                    </div>
+                    <div className="column">
+                        <h1>DELIVERY/RETURN</h1>
+                        <p>Enjoy fast and secure delivery. You have 14 days — effortlessly and with confidence.</p>
+                        <a href="#">View more</a>
+                    </div>
+                </div>
+            </div>
+
 
 
         </div>
