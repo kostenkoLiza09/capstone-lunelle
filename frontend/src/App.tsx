@@ -1,17 +1,21 @@
-import './App.css'
-import Header from "./components/header/Header.tsx";
-import Footer from "./components/footer/Footer.tsx";
+import Header from "./components/header/Header";
+import Footer from "./components/footer/Footer";
+import { Route, Routes } from "react-router-dom";
+import Collections from "./pages/navbar/collection/Collection.tsx";
+import Home from "./pages/home/Home.tsx";
+
 
 function App() {
-
-
-  return (
-    <>
-      <Header/>
-
-        <Footer/>
-    </>
-  )
+    return (
+        <>
+            <Header />
+            <Routes>
+                <Route path="/collection" element={<Collections />} />
+                <Route path={"/home"} element={<Home/>} />
+            </Routes>
+            <Footer />
+        </>
+    );
 }
 
-export default App
+export default App;
