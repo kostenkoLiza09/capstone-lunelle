@@ -2,6 +2,7 @@ package org.example.backend.service;
 
 import org.example.backend.exception.PerfumeNotFoundException;
 import org.example.backend.model.dto.PerfumeDto;
+import org.example.backend.model.enums.Selection;
 import org.example.backend.model.plp.PerfumePlpDto;
 import org.example.backend.model.record.Perfume;
 import org.example.backend.repository.PerfumeRepository;
@@ -17,6 +18,19 @@ public class PerfumeService {
     public PerfumeService(PerfumeRepository perfumeRepository) {
         this.perfumeRepository = perfumeRepository;
     }
+
+    public List<PerfumePlpDto> filterBySelection(String category) {
+        List<Perfume> perfumes = switch (category.toUpperCase()) {
+            case "WOMEN" -> perfumeRepository.findBySelection(Selection.WOMEN);
+            case "MEN" -> perfumeRepository.findBySelection(Selection.MEN);
+            case "UNISEX" -> perfumeRepository.findBySelection(Selection.UNISEX);
+            default -> throw new IllegalArgumentException("Unknown selection: " + category);
+        };
+
+        return perfumes.stream().map(PerfumePlpDto::new).toList();
+    }
+
+
 
     public Perfume addPerfume(PerfumeDto perfumeDto){
         Perfume perfume = new Perfume(

@@ -24,6 +24,10 @@ public class PerfumeController {
     public List<PerfumePlpDto> findAll() {
         return perfumeService.findAllPlp();
     }
+    @GetMapping("/perfumes/selection")
+    public List<PerfumePlpDto> getPerfumesBySelection(@RequestParam String selection) {
+        return perfumeService.filterBySelection(selection);
+    }
 
     @PostMapping("/add")
     public Perfume addRecipe(@RequestBody PerfumeDto perfumeDto) {
