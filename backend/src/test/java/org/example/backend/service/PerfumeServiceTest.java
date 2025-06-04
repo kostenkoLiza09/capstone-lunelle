@@ -163,17 +163,39 @@ class PerfumeServiceTest {
 
         verify(perfumeRepository).findAll();
     }
-    @Test
-    void GetBySelection() {
 
+    @Test
+    void GetBySelectionWomen() {
         Perfume perfume = new Perfume("id1", "Name", "url", "desc",
                 List.of(new PerfumeVariant(Volume.ML30, 49.99f)), Selection.WOMEN,
-                Brand.CHANEL,  PerfumeFamily.FLORAL, List.of(Season.SPRING),
-                List.of(Notes.ROSE));
-        when(perfumeRepository.findBySelection(Selection.WOMEN)).thenReturn( List.of(perfume));
-        List<PerfumePlpDto>  result =  perfumeService.filterBySelection("WOMEN");
+                Brand.CHANEL, PerfumeFamily.FLORAL, List.of(Season.SPRING), List.of(Notes.ROSE));
+        when(perfumeRepository.findBySelection(Selection.WOMEN)).thenReturn(List.of(perfume));
+        List<PerfumePlpDto> result = perfumeService.filterBySelection("WOMEN");
         assertEquals(1, result.size());
-        assertEquals("id1",  result.get(0).id());
+        assertEquals("id1", result.get(0).id());
+    }
 
+    @Test
+    void GetBySelectionMen() {
+        Perfume perfume = new Perfume("id1", "Name", "url", "desc",
+                List.of(new PerfumeVariant(Volume.ML30, 49.99f)), Selection.MEN,
+                Brand.CHANEL, PerfumeFamily.FLORAL, List.of(Season.SPRING), List.of(Notes.ROSE));
+        when(perfumeRepository.findBySelection(Selection.MEN)).thenReturn(List.of(perfume));
+
+        List<PerfumePlpDto> result = perfumeService.filterBySelection("MEN");
+        assertEquals(1, result.size());
+        assertEquals("id1", result.get(0).id());
+    }
+
+
+    @Test
+    void GetBySelectionUnisex() {
+        Perfume perfume = new Perfume("id1", "Name", "url", "desc",
+                List.of(new PerfumeVariant(Volume.ML30, 49.99f)), Selection.UNISEX,
+                Brand.CHANEL, PerfumeFamily.FLORAL, List.of(Season.SPRING), List.of(Notes.ROSE));
+        when(perfumeRepository.findBySelection(Selection.UNISEX)).thenReturn(List.of(perfume));
+        List<PerfumePlpDto> result = perfumeService.filterBySelection("UNISEX");
+        assertEquals(1, result.size());
+        assertEquals("id1", result.get(0).id());
     }
 }
