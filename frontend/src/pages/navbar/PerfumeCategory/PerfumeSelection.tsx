@@ -1,14 +1,24 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import { useEffect, useState } from "react";
+import axios from "axios";
 import type { PerfumesPlp } from "../../../interfaces/PerfumesPlp.ts";
 
-const Collections: React.FC = () => {
+import './PerfumeSelection.css';
+
+type PerfumeCategoryProps = {
+    category: "WOMEN" | "MEN" | "UNISEX";
+};
+
+export default function PerfumeSelection({ category }: PerfumeCategoryProps) {
     const [perfumes, setPerfumes] = useState<PerfumesPlp[]>([]);
 
     useEffect(() => {
-        axios.get('http://localhost:8080/api/perfumes')
-            .then(response => setPerfumes(response.data));
-    }, []);
+        if (category) {
+            axios
+                .get("/api/perfumes/selection", { params: { selection: category } })
+                .then((res) => setPerfumes(res.data))
+                .catch((err) => console.error(err));
+        }
+    }, [category]);
 
     return (
         <>
@@ -35,5 +45,3 @@ const Collections: React.FC = () => {
         </>
     );
 }
-
-export default Collections;

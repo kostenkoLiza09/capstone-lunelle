@@ -51,13 +51,13 @@ export default function Home() {
 
             <div className="gender-section">
                 <div className="for-her">
-                    <a href="/women">
+                    <a href="/perfumes/women">
                     <img  src={Her} alt="For her" />
                     <h3>FOR HER</h3>
                     </a>
                 </div>
                 <div className="for-him">
-                <a href={ "/men"}>
+                <a href={ "/perfumes/men"}>
                     <img src={Him} alt="For him" />
                     <h3>FOR HIM</h3>
                 </a>
