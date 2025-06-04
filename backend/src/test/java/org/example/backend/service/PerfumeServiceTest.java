@@ -50,7 +50,7 @@ class PerfumeServiceTest {
         List<Notes> notes = List.of(Notes.COFFEE, Notes.ROSE);
         PerfumeDto perfume = new PerfumeDto(
                 "name", "imageURL" , "description",
-                variants, Selection.WOMAN, Brand.ARMANI, PerfumeFamily.AROMATIC,
+                variants, Selection.WOMEN, Brand.ARMANI, PerfumeFamily.AROMATIC,
                 seasons, notes);
 
         Perfume expected = new Perfume("id", perfume.name(), perfume.imageURL(), perfume.description(),
@@ -70,7 +70,7 @@ class PerfumeServiceTest {
         List<Notes> notes = List.of(Notes.MUSK, Notes.OUD);
 
         Perfume oldData = new Perfume("id", "name", "imageURL" , "description",
-                variants, Selection.WOMAN, Brand.ARMANI, PerfumeFamily.AROMATIC, seasons, notes);
+                variants, Selection.WOMEN, Brand.ARMANI, PerfumeFamily.AROMATIC, seasons, notes);
 
         List<PerfumeVariant> newVariants = List.of(
                 new PerfumeVariant(Volume.ML50, 50.99f)
@@ -80,11 +80,11 @@ class PerfumeServiceTest {
 
         PerfumeDto updateData = new PerfumeDto(
                 "name", "imageURL" , "description",
-                newVariants, Selection.WOMAN, Brand.ARMANI, PerfumeFamily.AROMATIC,
+                newVariants, Selection.WOMEN, Brand.ARMANI, PerfumeFamily.AROMATIC,
                 newSeasons, newNotes);
 
         Perfume updatedData = new Perfume("id", "name", "imageURL" , "description",
-                newVariants, Selection.WOMAN, Brand.ARMANI, PerfumeFamily.AROMATIC, newSeasons, newNotes);
+                newVariants, Selection.WOMEN, Brand.ARMANI, PerfumeFamily.AROMATIC, newSeasons, newNotes);
 
         when(perfumeRepository.findById("id")).thenReturn(Optional.of(oldData));
         when(perfumeRepository.save(any(Perfume.class))).thenReturn(updatedData);
@@ -110,7 +110,7 @@ class PerfumeServiceTest {
         List<Season> seasons = List.of(Season.WINTER, Season.AUTUMN);
         List<Notes> notes = List.of(Notes.AQUATIC, Notes.VANILLA);
         Perfume perfume = new Perfume("id","name", "imageURL" , "description",
-                variants, Selection.WOMAN, Brand.ARMANI, PerfumeFamily.AROMATIC, seasons, notes);
+                variants, Selection.WOMEN, Brand.ARMANI, PerfumeFamily.AROMATIC, seasons, notes);
 
         when(perfumeRepository.findById(perfumeId)).thenReturn(Optional.of(perfume));
         perfumeService.deletePerfume(perfumeId);
@@ -123,7 +123,7 @@ class PerfumeServiceTest {
     void findByIdPerfume (){
         String perfumeId = "id";
         Perfume perfume = new Perfume(perfumeId, "name", "imageURL", "description",
-                List.of(new PerfumeVariant(Volume.ML30, 49.99f)), Selection.WOMAN,
+                List.of(new PerfumeVariant(Volume.ML30, 49.99f)), Selection.WOMEN,
                 Brand.ARMANI, PerfumeFamily.AROMATIC, List.of(Season.WINTER, Season.AUTUMN),
                 List.of(Notes.AQUATIC, Notes.VANILLA)
         );
@@ -138,10 +138,10 @@ class PerfumeServiceTest {
     void findAllPlpList(){
         List<Perfume> listPerfume = List.of(
                 new Perfume("id1", "name1", "imageURL1", "description1",
-                        List.of(new PerfumeVariant(Volume.ML30, 49.99f)), Selection.WOMAN, Brand.ARMANI,
+                        List.of(new PerfumeVariant(Volume.ML30, 49.99f)), Selection.WOMEN, Brand.ARMANI,
                         PerfumeFamily.AROMATIC, List.of(Season.WINTER, Season.AUTUMN), List.of(Notes.AQUATIC, Notes.VANILLA)),
                 new Perfume("id2", "name2", "imageURL2", "description2",
-                        List.of(new PerfumeVariant(Volume.ML50, 50.99f)), Selection.MAN, Brand.ARMANI,
+                        List.of(new PerfumeVariant(Volume.ML50, 50.99f)), Selection.MEN, Brand.ARMANI,
                         PerfumeFamily.AROMATIC, List.of(Season.SUMMER, Season.AUTUMN), List.of(Notes.COFFEE, Notes.ROSE))
         );
         when(perfumeRepository.findAll()).thenReturn(listPerfume);

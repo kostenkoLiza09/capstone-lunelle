@@ -70,7 +70,7 @@ class PerfumeControllerTest {
                          {"volume": "ML30", "price": 49.99},
                          {"volume": "ML50", "price": 59.99}
                        ],
-                       "selection": "WOMAN",
+                       "selection": "WOMEN",
                        "brand": "ARMANI",
                        "perfumeFamily": "AROMATIC",
                        "seasons": ["SPRING", "SUMMER"],
@@ -86,7 +86,7 @@ class PerfumeControllerTest {
                         new PerfumeVariant(Volume.ML30, 49.99f),
                         new PerfumeVariant(Volume.ML50, 59.99f)
                 ),
-                Selection.WOMAN,
+                Selection.WOMEN,
                 Brand.ARMANI,
                 PerfumeFamily.AROMATIC,
                 List.of(Season.SPRING, Season.SUMMER),
@@ -114,7 +114,7 @@ class PerfumeControllerTest {
                          {"volume": "ML30", "price": 49.99},
                          {"volume": "ML50", "price": 59.99}
                        ],
-                       "selection": "WOMAN",
+                       "selection": "WOMEN",
                        "brand": "ARMANI",
                        "perfumeFamily": "AROMATIC",
                        "seasons": ["SPRING", "SUMMER"],
@@ -124,7 +124,7 @@ class PerfumeControllerTest {
 
         Perfume perfume = new Perfume(id, "Name3", "imageURL", "description",
                 List.of(new PerfumeVariant(Volume.ML30, 49.99f), new PerfumeVariant(Volume.ML50, 59.99f)),
-                Selection.WOMAN, Brand.ARMANI, PerfumeFamily.AROMATIC, List.of(Season.SPRING, Season.SUMMER),
+                Selection.WOMEN, Brand.ARMANI, PerfumeFamily.AROMATIC, List.of(Season.SPRING, Season.SUMMER),
                 List.of(Notes.AQUATIC, Notes.VANILLA));
 
         when(perfumeService.updatePerfume(Mockito.eq(id), Mockito.any())).thenReturn(perfume);
@@ -149,7 +149,7 @@ class PerfumeControllerTest {
         String id = "id1";
         Perfume perfume = new Perfume(id, "Name3", "imageURL", "description",
                 List.of(new PerfumeVariant(Volume.ML30, 49.99f), new PerfumeVariant(Volume.ML50, 59.99f)),
-                Selection.WOMAN, Brand.ARMANI, PerfumeFamily.AROMATIC, List.of(Season.SPRING, Season.SUMMER),
+                Selection.WOMEN, Brand.ARMANI, PerfumeFamily.AROMATIC, List.of(Season.SPRING, Season.SUMMER),
                 List.of(Notes.AQUATIC, Notes.VANILLA));
         when(perfumeService.findById(id)).thenReturn(perfume);
 
