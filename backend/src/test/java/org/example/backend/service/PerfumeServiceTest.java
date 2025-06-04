@@ -163,4 +163,17 @@ class PerfumeServiceTest {
 
         verify(perfumeRepository).findAll();
     }
+    @Test
+    void GetBySelection() {
+
+        Perfume perfume = new Perfume("id1", "Name", "url", "desc",
+                List.of(new PerfumeVariant(Volume.ML30, 49.99f)), Selection.WOMEN,
+                Brand.CHANEL,  PerfumeFamily.FLORAL, List.of(Season.SPRING),
+                List.of(Notes.ROSE));
+        when(perfumeRepository.findBySelection(Selection.WOMEN)).thenReturn( List.of(perfume));
+        List<PerfumePlpDto>  result =  perfumeService.filterBySelection("WOMEN");
+        assertEquals(1, result.size());
+        assertEquals("id1",  result.get(0).id());
+
+    }
 }
