@@ -4,6 +4,7 @@ import loginIcon from '../../assets/images/header/Login.svg';
 import likeIcon from '../../assets/images/header/Like.svg';
 import basketIcon from '../../assets/images/header/Basket.svg';
 import logoIcon from '../../assets/images/header/Logo.svg';
+import {Link} from "react-router-dom";
 
 
 export default function Header(){
@@ -41,13 +42,13 @@ export default function Header(){
                 </div>
 
                 <div className={"nav-bar"}>
-                    <a href="/new">New</a>
-                    <a href="/collection">Full Collection</a>
-                    <a href="/women">Women</a>
-                    <a href="/men">Men</a>
-                    <a href="/unisex">Unisex</a>
-                    <a href="/brands">Brands</a>
-                    <a href="/stories">Stories</a>
+                    <Link to="/new">New</Link>
+                    <Link to="/collection">Full Collection</Link>
+                    <Link to="/perfumes/women">Women</Link>
+                    <Link to="/perfumes/men">Men</Link>
+                    <Link to="/perfumes/unisex">Unisex</Link>
+                    <Link to="/brands">Brands</Link>
+                    <Link to="/stories">Stories</Link>
                 </div>
             </header>
         </>
