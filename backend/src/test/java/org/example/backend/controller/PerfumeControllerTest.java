@@ -158,5 +158,22 @@ class PerfumeControllerTest {
                 .andExpect(status().isOk());
 
     }
+    @Test
+    void getPerfumesBySelection() throws Exception {
+        String selection = "WOMEN";
+
+        List<PerfumePlpDto> perfumePlpDtos = List.of(
+                new PerfumePlpDto("id1", "Name1", "img1", 30, Volume.ML20),
+                new PerfumePlpDto("id2", "Name2", "img2", 50, Volume.ML20)
+        );
+
+        when(perfumeService.filterBySelection(selection)).thenReturn(perfumePlpDtos);
+
+        mockMvc.perform(get("/api/perfumes/selection")
+                        .param("selection", selection))
+                .andExpect(status().isOk())
+                .andExpect(status().isOk());
+    }
+
 
 }
