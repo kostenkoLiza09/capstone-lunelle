@@ -153,7 +153,7 @@ class PerfumeControllerTest {
                 List.of(Notes.AQUATIC, Notes.VANILLA));
         when(perfumeService.findById(id)).thenReturn(perfume);
 
-        mockMvc.perform(get("/api/find/" + id))
+        mockMvc.perform(get("/api/" + id))
                 .andExpect(jsonPath("$.id", is(id)))
                 .andExpect(status().isOk());
 
