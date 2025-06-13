@@ -44,7 +44,7 @@ public class PerfumeController {
         perfumeService.deletePerfume(id);
     }
 
-    @GetMapping("/find/{id}")
+    @GetMapping("/{id}")
     public Perfume findById(@PathVariable String id) {
         return perfumeService.findById(id);
     }

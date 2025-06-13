@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import type { PerfumesPlp } from "../../../interfaces/PerfumesPlp.ts";
+import {useNavigate} from "react-router-dom";
 
 const Collections: React.FC = () => {
     const [perfumes, setPerfumes] = useState<PerfumesPlp[]>([]);
+    const navigate = useNavigate();
 
     useEffect(() => {
         axios.get('http://localhost:8080/api/perfumes')
@@ -26,7 +28,7 @@ const Collections: React.FC = () => {
                                 <span>{p.price} €</span>
                                 <span>{p.volume}</span>
                             </p>
-                            <button>BUY</button>
+                            <button onClick={() => navigate(`/perfumes/details/${p.id}`)}>BUY</button>
                         </div>
                     ))}
                 </div>

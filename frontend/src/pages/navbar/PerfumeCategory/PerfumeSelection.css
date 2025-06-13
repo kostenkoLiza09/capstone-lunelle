@@ -63,9 +63,9 @@
 
 .perfume-card button {
     width: 100%;
-    border: 1px solid #0ABAB5;
+    border: 1px solid #C04040;
     background-color: transparent;
-    color: #0ABAB5;
+    color: #C04040;
     padding: 0.5rem 1rem;
     cursor: pointer;
     font-weight: 500;
@@ -73,6 +73,6 @@
 }
 
 .perfume-card button:hover {
-    background-color: #0ABAB5;
+    background-color: #C04040;
     color: #fff;
 }

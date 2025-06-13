@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react";
 import axios from "axios";
 import type { PerfumesPlp } from "../../../interfaces/PerfumesPlp.ts";
 
 import './PerfumeSelection.css';
+import {useNavigate} from "react-router-dom";
+import {useEffect, useState} from "react";
 
 type PerfumeCategoryProps = {
     category: "WOMEN" | "MEN" | "UNISEX";
@@ -10,6 +11,7 @@ type PerfumeCategoryProps = {
 
 export default function PerfumeSelection({ category }: PerfumeCategoryProps) {
     const [perfumes, setPerfumes] = useState<PerfumesPlp[]>([]);
+    const navigate = useNavigate();
 
     useEffect(() => {
         if (category) {
@@ -36,7 +38,7 @@ export default function PerfumeSelection({ category }: PerfumeCategoryProps) {
                                 <span>{p.price} €</span>
                                 <span>{p.volume}</span>
                             </p>
-                            <button>BUY</button>
+                            <button onClick={() => navigate(`/perfumes/details/${p.id}`)}>BUY</button>
                         </div>
                     ))}
                 </div>
