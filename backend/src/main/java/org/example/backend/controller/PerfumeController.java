@@ -21,9 +21,17 @@ public class PerfumeController {
     }
 
     @GetMapping("/perfumes")
-    public List<PerfumePlpDto> findAll() {
-        return perfumeService.findAllPlp();
+    public List<PerfumePlpDto> findFiltered(
+            @RequestParam(required = false) String selection,
+            @RequestParam(required = false) String brand,
+            @RequestParam(required = false) String volume,
+            @RequestParam(required = false) String perfumeFamily,
+            @RequestParam(required = false) String seasons,
+            @RequestParam(required = false) String notes
+    ) {
+        return perfumeService.findAllPlpFiltered(selection, brand, volume, perfumeFamily, seasons, notes);
     }
+
     @GetMapping("/perfumes/selection")
     public List<PerfumePlpDto> getPerfumesBySelection(@RequestParam String selection) {
         return perfumeService.filterBySelection(selection);
