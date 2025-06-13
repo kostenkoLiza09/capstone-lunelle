@@ -1,3 +1,9 @@
+.perfume-page {
+    display: flex;
+    gap: 2rem;
+    padding: 50px 10%;
+}
+
 .perfume-filter {
     width: 200px;
 
@@ -67,6 +73,6 @@
 }
 
 .perfume-card button:hover {
-    background-color:#C04040;
+    background-color: #C04040;
     color: #fff;
 }

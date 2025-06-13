@@ -1,16 +1,37 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import type { PerfumesPlp } from "../../../interfaces/PerfumesPlp.ts";
-import {useNavigate} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
+const validCategories = ["WOMEN", "MEN", "UNISEX"];
+import './Collection.css'
 
 const Collections: React.FC = () => {
     const [perfumes, setPerfumes] = useState<PerfumesPlp[]>([]);
     const navigate = useNavigate();
+    const { category } = useParams<{ category?: string }>();
 
     useEffect(() => {
-        axios.get('http://localhost:8080/api/perfumes')
-            .then(response => setPerfumes(response.data));
-    }, []);
+        const upper = category?.toUpperCase();
+
+        if (upper && validCategories.includes(upper)) {
+            axios
+                .get('/api/perfumes/selection', { params: { selection: upper } })
+                .then((res) => setPerfumes(res.data))
+                .catch((err) => console.error(err));
+        } else if (!category) {
+            axios
+                .get('/api/perfumes')
+                .then((res) => setPerfumes(res.data))
+                .catch((err) => console.error(err));
+        } else {
+            setPerfumes([]);
+        }
+    }, [category]);
+
+    if (category && !validCategories.includes(category.toUpperCase())) {
+        return <p>Category not found</p>;
+    }
+
 
     return (
         <>
