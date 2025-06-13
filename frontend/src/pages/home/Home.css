@@ -49,7 +49,7 @@
         border-bottom: 1px solid rgba(169, 169, 169, 1);
     }
     .mainImg a:hover {
-        color: #0ABAB5;
+        color: #C04040;
         border-bottom-color: rgba(169, 169, 169, 0);
     }
 
@@ -91,7 +91,7 @@
     }
 
     .gender-section h3:hover {
-color: #0ABAB5;
+color: #C04040;
     }
 
     .gender-section a{
@@ -139,7 +139,7 @@ color: #0ABAB5;
     }
 
     .miniature-set a:hover {
-        color: #0ABAB5;
+        color: #C04040;
         border-bottom-color: rgba(169, 169, 169, 0);
     }
 
@@ -202,9 +202,9 @@ color: #0ABAB5;
 
     .perfume-card button {
         width: 230px;
-        border: 2px solid #0ABAB5;
+        border: 2px solid #C04040;
         background-color: transparent;
-        color: #0ABAB5;
+        color: #C04040;
         padding: 0.6rem 1.2rem;
         cursor: pointer;
         font-weight: 500;
@@ -212,7 +212,7 @@ color: #0ABAB5;
     }
 
     .perfume-card button:hover {
-        background-color: #0ABAB5;
+        background-color: #C04040;
         color: #fff;
 
     }
@@ -259,7 +259,7 @@ color: #0ABAB5;
     }
 
     .article a:hover {
-        color: #0ABAB5;
+        color: #C04040;
         border-bottom-color: rgba(169, 169, 169, 0);
     }
 
@@ -325,7 +325,7 @@ color: #0ABAB5;
 }
 
 .column a:hover {
-    color: #0ABAB5;
+    color: #C04040;
     border-bottom-color: rgba(169, 169, 169, 0);
 }
 
