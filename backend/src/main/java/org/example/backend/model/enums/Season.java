@@ -1,5 +1,6 @@
 package org.example.backend.model.enums;
 
+import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.Getter;
 
 @Getter
@@ -17,5 +18,9 @@ public enum Season {
 
     private final String value;
 
+    @JsonValue
+    public String getFamilyName() {
+        return value;
+    }
 
 }

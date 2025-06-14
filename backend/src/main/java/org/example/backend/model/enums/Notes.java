@@ -1,5 +1,6 @@
 package org.example.backend.model.enums;
 
+import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.Getter;
 
 @Getter
@@ -28,5 +29,10 @@ public enum Notes {
 
     Notes(String note) {
         this.note = note;
+    }
+
+    @JsonValue
+    public String getFamilyName() {
+        return note;
     }
 }

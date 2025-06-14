@@ -1,5 +1,6 @@
 package org.example.backend.model.enums;
 
+import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.Getter;
 
 @Getter
@@ -15,8 +16,8 @@ public enum Selection {
         this.value = value;
     }
 
-    @Override
-    public String toString() {
+    @JsonValue
+    public String getSelection() {
         return value;
     }
 }

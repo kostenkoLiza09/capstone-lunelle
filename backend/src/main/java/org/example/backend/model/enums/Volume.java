@@ -1,5 +1,6 @@
 package org.example.backend.model.enums;
 
+import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.Getter;
 
 @Getter
@@ -17,4 +18,9 @@ public enum Volume {
     }
 
     private final String value;
+
+    @JsonValue
+    public String getVolume() {
+        return value;
+    }
 }
