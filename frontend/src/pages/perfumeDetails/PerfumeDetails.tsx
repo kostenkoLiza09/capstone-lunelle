@@ -1,58 +1,79 @@
-import {useParams} from "react-router-dom";
-import {useEffect, useState} from "react";
+import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
 import axios from "axios";
-import type {PerfumeDetails} from "../../interfaces/PerfumeDetails.ts";
-import './PerfumeDetails.css'
+import type { PerfumeDetails } from "../../interfaces/PerfumeDetails.ts";
+import './PerfumeDetails.css';
+import type { PerfumeVariant } from "../../interfaces/PerfumeVariant.ts";
 
-export default function PerfumeDetails(){
+export default function PerfumeDetails() {
     const { id } = useParams<{ id: string }>();
     const [perfume, setPerfume] = useState<PerfumeDetails | null>(null);
+    const [selectedVariant, setSelectedVariant] = useState<PerfumeVariant | null>(null);
+    const [showOptions, setShowOptions] = useState(false);
 
     useEffect(() => {
         if (id) {
             axios
                 .get(`http://localhost:8080/api/${id}`)
                 .then((res) => {
-                    console.log("Perfume data from backend:", res.data);
                     setPerfume(res.data);
+                    if (res.data.variants.length > 0) {
+                        setSelectedVariant(res.data.variants[0]);
+                    }
                 })
                 .catch((err) => console.error(err));
         }
     }, [id]);
 
-
-    if (!perfume) {
-        return <div>Loading...</div>;
-    }
+    if (!perfume) return <div>Loading...</div>;
 
     return (
         <div className="perfume-details">
             <img src={perfume.imageURL} alt={perfume.name} />
             <div className="perfume-text">
-                <h1 className={"name"}>{perfume.name}</h1>
+                <h1 className="name">{perfume.name}</h1>
                 <p>{perfume.description}</p>
 
-                <ul>
-                    {perfume.variants?.length ? (
-                        perfume.variants.map((variant, index) => (
-                            <li key={index}>{variant.volume} — {variant.price} €</li>
-                        ))
-                    ) : (
-                        <li>No variants available</li>
-                    )}
-                </ul>
-
                 <h2 className="product-details-title">PRODUCT DETAILS</h2>
-
                 <div className="product-info">
                     <p>Brand: {perfume.brand}</p>
                     <p>Selection: {perfume.selection}</p>
-                    <p>Family: {perfume.perfumeFamily}</p>
-                    <p>Seasons: {perfume.seasons.join(", ")}</p>
-                    <p>Notes: {perfume.notes.join(", ")}</p>
+                    <p>Season: {perfume.seasons.join(", ")}</p>
+                    <p>Fragrance Family: {perfume.perfumeFamily}</p>
+                    <p>Main Notes: {perfume.notes.join(", ")}</p>
                 </div>
 
-                <button className="select-size-button">SELECT SIZE</button>
+                <div className="selector-wrapper">
+                    <button
+                        className="select-size-button"
+                        onClick={() => setShowOptions(!showOptions)}
+                    >
+                        SELECT SIZE
+                    </button>
+                    {showOptions && (
+                        <ul className="size-options">
+                            {perfume.variants.map((variant, index) => (
+                                <li
+                                    key={index}
+                                    className="size-option"
+                                    onClick={() => {
+                                        setSelectedVariant(variant);
+                                        setShowOptions(false);
+                                    }}
+                                >
+                                    {variant.volume} ml
+                                </li>
+                            ))}
+                        </ul>
+                    )}
+                    {selectedVariant && (
+                        <div className="price-display">
+                            {selectedVariant.price.toFixed(2)} €&nbsp;&nbsp;
+                            {selectedVariant.volume}ml
+                        </div>
+                    )}
+                </div>
+
                 <button className="buy-button">BUY</button>
             </div>
         </div>
