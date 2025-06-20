@@ -1,6 +1,5 @@
-package org.example.backend;
+package org.example.backend.security;
 
-import com.mongodb.lang.NonNull;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
@@ -12,14 +11,11 @@ public class WebConfig {
     @Bean
     public WebMvcConfigurer corsConfigurer() {
         return new WebMvcConfigurer() {
-
             @Override
-            public void addCorsMappings(@NonNull CorsRegistry registry) {
-
+            public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
-                        .allowedOrigins("http://localhost:5173")
+                        .allowedOrigins("http://localhost:5173", "https://capstone-lunelle-latest.onrender.com")
                         .allowedMethods("*")
-                        .allowedHeaders("*")
                         .allowCredentials(true);
             }
         };

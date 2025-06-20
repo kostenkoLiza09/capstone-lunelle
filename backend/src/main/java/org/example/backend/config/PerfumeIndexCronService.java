@@ -46,10 +46,10 @@ public class PerfumeIndexCronService {
             StringBuilder info = new StringBuilder();
             info.append(perfume.name());
             if (perfume.brand() != null) {
-                info.append(", ").append(perfume.brand().toString());
+                info.append(", ").append(perfume.brand());
             }
             if (perfume.perfumeFamily() != null) {
-                info.append(", ").append(perfume.perfumeFamily().toString());
+                info.append(", ").append(perfume.perfumeFamily());
             }
             if (perfume.notes() != null && !perfume.notes().isEmpty()) {
                 info.append(", notes: ");
