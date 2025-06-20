@@ -8,11 +8,12 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.data.elasticsearch.core.ElasticsearchOperations;
 import org.springframework.data.elasticsearch.core.IndexOperations;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.util.List;
 
 import static org.mockito.Mockito.*;
-
+@ActiveProfiles("test")
 class PerfumeIndexCronServiceTest {
 
     private PerfumeRepository perfumeRepository;
