@@ -21,9 +21,7 @@ class AuthControllerTest {
 
     @Test
     void getMe() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/auth/me")
-                        .with(oidcLogin().userInfoToken(token -> token
-                                .claim("login", "testUser"))))
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/auth/me"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().string("testUser"));
     }
