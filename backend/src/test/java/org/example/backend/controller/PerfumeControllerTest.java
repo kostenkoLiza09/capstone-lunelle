@@ -1,7 +1,5 @@
 package org.example.backend.controller;
 
-import org.example.backend.config.PerfumeIndexCronService;
-import org.example.backend.config.PerfumeIndexRepository;
 import org.example.backend.model.enums.*;
 import org.example.backend.model.plp.PerfumePlpDto;
 import org.example.backend.model.record.Perfume;
@@ -9,13 +7,13 @@ import org.example.backend.model.record.PerfumeVariant;
 import org.example.backend.service.PerfumeService;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.TestConfiguration;
+
+import org.springframework.context.annotation.Bean;
 import org.springframework.http.MediaType;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.context.TestConfiguration;
-import org.springframework.context.annotation.Bean;
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.mockito.Mockito.when;
@@ -32,9 +30,13 @@ import static org.hamcrest.Matchers.is;
 
 @WebMvcTest(PerfumeController.class)
 @AutoConfigureMockMvc(addFilters = false)
-@ActiveProfiles("test")
 class PerfumeControllerTest {
 
+    @Autowired
+    private MockMvc mockMvc;
+
+    @Autowired
+    private PerfumeService perfumeService;
 
     @TestConfiguration
     static class TestConfig {
@@ -42,37 +44,24 @@ class PerfumeControllerTest {
         public PerfumeService perfumeService() {
             return Mockito.mock(PerfumeService.class);
         }
-
-        @Bean
-        public PerfumeIndexRepository perfumeIndexRepository() {
-            return Mockito.mock(PerfumeIndexRepository.class);
-        }
-
-        @Bean
-        public PerfumeIndexCronService perfumeIndexCronService() {
-            return Mockito.mock(PerfumeIndexCronService.class);
-        }
     }
 
-    @Autowired
-    private MockMvc mockMvc;
-
-    @Autowired
-    private PerfumeService perfumeService;
     @Test
     void findAll() throws Exception {
-
         List<PerfumePlpDto> perfumes = List.of(
                 new PerfumePlpDto("id1", "name1", "imageURL1", 49.99f, Volume.ML30),
                 new PerfumePlpDto("id2", "name2", "imageURL2", 59.99f, Volume.ML20)
-    );
+        );
+
         when(perfumeService.findAllPlpFiltered(null, null, null, null, null, null))
                 .thenReturn(perfumes);
+
         mockMvc.perform(get("/api/perfumes"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].name", is("name1")))
                 .andExpect(jsonPath("$[1].price", is(59.99)));
     }
+
 
     @Test
     void addPerfume() throws Exception{
