@@ -7,7 +7,7 @@ import PerfumeDetails from "./pages/perfumeDetails/PerfumeDetails.tsx";
 import Brands from "./pages/navbar/brands/Brands.tsx";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import ProtectedRoute from "../ProtectedRoute.tsx";
+import ProtectedRoute from "./ProtectedRoute.tsx";
 
 function App() {
     const [user, setUser] = useState<string | null | undefined>(undefined);
