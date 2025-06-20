@@ -1,38 +1,49 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import type { PerfumesPlp } from "../../../interfaces/PerfumesPlp.ts";
-import {useNavigate, useParams} from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 const validCategories = ["WOMEN", "MEN", "UNISEX"];
 import './Collection.css'
+import Banner from "../../../components/banner/Banner.tsx";
+import InfoBanner from "../../../components/InfoBanner/InfoBanner.tsx";
 
 const Collections: React.FC = () => {
     const [perfumes, setPerfumes] = useState<PerfumesPlp[]>([]);
     const navigate = useNavigate();
     const { category } = useParams<{ category?: string }>();
+    const [brandFilter, setBrandFilter] = useState<string[]>([]);
+    const [volumeFilter, setVolumeFilter] = useState<string[]>([]);
+    const [perfumeFamilyFilter, setPerfumeFamilyFilter] = useState<string[]>([]);
+    const [seasonsFilter, setSeasonsFilter] = useState<string[]>([]);
+    const [notesFilter, setNotesFilter] = useState<string[]>([]);
 
-    const [brandFilter, setBrandFilter] = useState<string>('');
-    const [volumeFilter, setVolumeFilter] = useState<string>('');
-    const [perfumeFamilyFilter, setPerfumeFamilyFilter] = useState<string>('');
-    const [seasonsFilter, setSeasonsFilter] = useState<string>('');
-    const [notesFilter, setNotesFilter] = useState<string>('');
+    const handleCheckboxChange = (
+        setter: React.Dispatch<React.SetStateAction<string[]>>,
+        values: string[],
+        value: string,
+        checked: boolean
+    ) => {
+        if (checked) {
+            setter([...values, value]);
+        } else {
+            setter(values.filter(v => v !== value));
+        }
+    };
 
     useEffect(() => {
         const upper = category?.toUpperCase();
-        if (category && !validCategories.includes(upper || '')) {
-            setPerfumes([]);
-            return;
-        }
         const params: Record<string, string> = {};
 
         if (upper && validCategories.includes(upper)) {
             params.selection = upper;
         }
 
-        if (brandFilter) params.brand = brandFilter;
-        if (volumeFilter) params.volume = volumeFilter;
-        if (perfumeFamilyFilter) params.perfumeFamily = perfumeFamilyFilter;
-        if (seasonsFilter) params.seasons = seasonsFilter;
-        if (notesFilter) params.notes = notesFilter;
+        if (brandFilter.length) params.brand = brandFilter.join(',');
+        if (volumeFilter.length) params.volume = volumeFilter.join(',');
+        if (perfumeFamilyFilter.length) params.perfumeFamily = perfumeFamilyFilter.join(',');
+        if (seasonsFilter.length) params.seasons = seasonsFilter.join(',');
+        if (notesFilter.length) params.notes = notesFilter.join(',');
+
         axios
             .get('/api/perfumes', { params })
             .then(res => setPerfumes(res.data))
@@ -43,99 +54,91 @@ const Collections: React.FC = () => {
     }, [category, brandFilter, volumeFilter, perfumeFamilyFilter, seasonsFilter, notesFilter]);
 
 
-
     return (
         <>
+            <Banner />
             <div className="perfume-page">
                 <div className="perfume-filter">
-                    <h1>фільтер</h1>
+                    <div>
+                        <h3>Brand</h3>
+                        {["BYREDO", "KILIAN", "INITIO", "GUCCI", "DIOR", "PRADA", "CHANEL",
+                            "VERSACE", "DOLCEGABBANA", "ARMANI", "ZARA", "CALVINKLEIN"
+                        ].map(brand => (
+                            <label key={brand}>
+                                <input
+                                    type="checkbox"
+                                    checked={brandFilter.includes(brand)}
+                                    onChange={e => handleCheckboxChange(setBrandFilter, brandFilter, brand, e.target.checked)}
+                                />
+                                {brand}
+                            </label>
+                        ))}
+                    </div>
 
-                    <label>
-                        Brand:
-                        <select value={brandFilter} onChange={e => setBrandFilter(e.target.value)}>
-                            <option value="">All</option>
-                            <option value="BYREDO">Byredo</option>
-                            <option value="KILIAN">Kilian</option>
-                            <option value="INITIO">Initio</option>
-                            <option value="GUCCI">Gucci</option>
-                            <option value="DIOR">Dior</option>
-                            <option value="PRADA">Prada</option>
-                            <option value="CHANEL">Chanel</option>
-                            <option value="VERSACE">Versace</option>
-                            <option value="DOLCEGABBANA">Dolce & Gabbana</option>
-                            <option value="ARMANI">Armani</option>
-                            <option value="ZARA">Zara</option>
-                            <option value="CALVINKLEIN">Calvin Klein</option>
-                        </select>
-                    </label>
-                    <label>
-                        Volume:
-                        <select value={volumeFilter} onChange={e => setVolumeFilter(e.target.value)}>
-                            <option value="">All</option>
-                            <option value="ML20">20 ml</option>
-                            <option value="ML30">30 ml</option>
-                            <option value="ML50">50 ml</option>
-                            <option value="ML90">90 ml</option>
-                            <option value="100ML">100 ml</option>
-                            <option value="ML150">150 ml</option>
-                            <option value="ML200">200 ml</option>
-                        </select>
-                    </label>
-                    <label>
-                        Family:
-                        <select value={perfumeFamilyFilter} onChange={e => setPerfumeFamilyFilter(e.target.value)}>
-                            <option value="">All</option>
-                            <option value="FLORAL">Floral</option>
-                            <option value="WOODY">Woody</option>
-                            <option value="ORIENTAL">Oriental</option>
-                            <option value="FRESH">Fresh</option>
-                            <option value="CITRUS">Citrus</option>
-                            <option value="CHYPRE">Chypre</option>
-                            <option value="GOURMAND">Gourmand</option>
-                            <option value="AROMATIC">Aromatic</option>
-                            <option value="MUSKY">Musky</option>
-                            <option value="FRUITY">Fruity</option>
+                    <div>
+                        <h3>Volume</h3>
+                        {["ML20", "ML30", "ML50", "ML90", "100ML", "ML150", "ML200"
+                        ].map(volume => (
+                            <label key={volume}>
+                                <input
+                                    type="checkbox"
+                                    checked={volumeFilter.includes(volume)}
+                                    onChange={e => handleCheckboxChange(setVolumeFilter, volumeFilter, volume, e.target.checked)}
+                                />
+                                {volume.replace('ML', '').toLowerCase() === '100ml' ? '100 ml' : volume.replace('ML', '') + ' ml'}
+                            </label>
+                        ))}
+                    </div>
 
+                    <div>
+                        <h3>Family</h3>
+                        {["FLORAL", "WOODY", "ORIENTAL", "FRESH", "CITRUS", "CHYPRE", "GOURMAND", "AROMATIC",
+                            "MUSKY", "FRUITY"
+                        ].map(family => (
+                            <label key={family}>
+                                <input
+                                    type="checkbox"
+                                    checked={perfumeFamilyFilter.includes(family)}
+                                    onChange={e => handleCheckboxChange(setPerfumeFamilyFilter, perfumeFamilyFilter, family, e.target.checked)}
+                                />
+                                {family.charAt(0) + family.slice(1).toLowerCase()}
+                            </label>
+                        ))}
+                    </div>
 
-                        </select>
-                    </label>
-                    <label>
-                        Seasons:
-                        <select value={seasonsFilter} onChange={e => setSeasonsFilter(e.target.value)}>
-                            <option value="">All</option>
-                            <option value="SUMMER">Summer</option>
-                            <option value="WINTER">Winter</option>
-                            <option value="AUTUMN">Autumn</option>
-                            <option value="SPRING">Spring</option>
-                            <option value="ALL">All seasons</option>
+                    <div>
+                        <h3>Seasons</h3>
+                        {["SUMMER", "WINTER", "AUTUMN", "SPRING", "ALL"
+                        ].map(season => (
+                            <label key={season}>
+                                <input
+                                    type="checkbox"
+                                    checked={seasonsFilter.includes(season)}
+                                    onChange={e => handleCheckboxChange(setSeasonsFilter, seasonsFilter, season, e.target.checked)}
+                                />
+                                {season.charAt(0) + season.slice(1).toLowerCase().replace('all', 'All seasons')}
+                            </label>
+                        ))}
+                    </div>
 
-                        </select>
-                    </label>
-                    <label>
-                        Notes:
-                        <select value={notesFilter} onChange={e => setNotesFilter(e.target.value)}>
-                            <option value="">All</option>
-                            <option value="BERGAMOT">Bergamot</option>
-                            <option value="LEMON">Lemon</option>
-                            <option value="ROSE">Rose</option>
-                            <option value="JASMINE">Jasmine</option>
-                            <option value="VANILLA">Vanilla</option>
-                            <option value="SANDALWOOD">Sandalwood</option>
-                            <option value="CEDARWOOD">Cedarwood</option>
-                            <option value="MUSK">Musk</option>
-                            <option value="PATCHOULI">Patchouli</option>
-                            <option value="AMBER">Amber</option>
-                            <option value="PEACH">Peach</option>
-                            <option value="BLACKCURRANT">Blackcurrant</option>
-                            <option value="TONKA_BEAN">Tonka Bean</option>
-                            <option value="LAVENDER">Lavender</option>
-                            <option value="OUD">Oud</option>
-                            <option value="PEPPER">Pepper</option>
-                            <option value="AQUATIC">Aquatic</option>
-                        </select>
-                    </label>
+                    <div>
+                        <h3>Notes</h3>
+                        {["BERGAMOT", "LEMON", "ROSE", "JASMINE", "VANILLA",
+                            "SANDALWOOD", "CEDARWOOD", "MUSK", "PATCHOULI", "AMBER",
+                            "PEACH", "BLACKCURRANT", "TONKA_BEAN", "LAVENDER",
+                            "OUD", "PEPPER", "AQUATIC"
+                        ].map(note => (
+                            <label key={note}>
+                                <input
+                                    type="checkbox"
+                                    checked={notesFilter.includes(note)}
+                                    onChange={e => handleCheckboxChange(setNotesFilter, notesFilter, note, e.target.checked)}
+                                />
+                                {note.replace('_', ' ').toLowerCase().replace(/\b\w/g, l => l.toUpperCase())}
+                            </label>
+                        ))}
+                    </div>
                 </div>
-            </div>
                 <div className="perfume-grid">
                     {perfumes.map(p => (
                         <div key={p.id} className="perfume-card">
@@ -149,6 +152,11 @@ const Collections: React.FC = () => {
                         </div>
                     ))}
                 </div>
+            </div>
+
+            <div>
+                <InfoBanner/>
+            </div>
 
         </>
     );

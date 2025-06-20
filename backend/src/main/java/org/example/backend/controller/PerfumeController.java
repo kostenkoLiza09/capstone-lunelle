@@ -1,23 +1,32 @@
 package org.example.backend.controller;
 
+import org.example.backend.config.PerfumeIndex;
+import org.example.backend.config.PerfumeIndexCronService;
+import org.example.backend.config.PerfumeIndexRepository;
 import org.example.backend.model.dto.PerfumeDto;
 import org.example.backend.model.plp.PerfumePlpDto;
 import org.example.backend.model.record.Perfume;
 import org.example.backend.service.PerfumeService;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+
+
 @RestController
 @RequestMapping("/api")
 public class PerfumeController {
-
+    private static final Logger logger = LoggerFactory.getLogger(PerfumeController.class);
     private final PerfumeService perfumeService;
+    private final PerfumeIndexRepository perfumeIndexRepository;
+    private final PerfumeIndexCronService perfumeIndexCronService;
 
-    @Autowired
-    public PerfumeController(PerfumeService perfumeService) {
+    public PerfumeController(PerfumeService perfumeService, PerfumeIndexRepository perfumeIndexRepository, PerfumeIndexCronService perfumeIndexCronService) {
         this.perfumeService = perfumeService;
+        this.perfumeIndexRepository = perfumeIndexRepository;
+        this.perfumeIndexCronService = perfumeIndexCronService;
     }
 
     @GetMapping("/perfumes")
@@ -30,6 +39,18 @@ public class PerfumeController {
             @RequestParam(required = false) String notes
     ) {
         return perfumeService.findAllPlpFiltered(selection, brand, volume, perfumeFamily, seasons, notes);
+    }
+    @GetMapping("/search")
+    public List<PerfumeIndex> search(@RequestParam("q") String query) {
+        logger.info("Search query: {}", query);
+        List<PerfumeIndex> results = perfumeIndexRepository.findByPerfumeInfoContainingIgnoreCase(query);
+        logger.info("Results found: {}", results.size());
+        return results;
+    }
+    @GetMapping("/sync")
+    public String manualSync() {
+        perfumeIndexCronService.syncToElastic();
+        return "Sync started";
     }
 
     @GetMapping("/perfumes/selection")
