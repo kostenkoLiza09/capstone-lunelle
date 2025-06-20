@@ -243,6 +243,16 @@ class PerfumeServiceTest {
         assertEquals("id1", result.get(0).id());
     }
 
+    @Test
+    void findAllPlpFiltered_InvalidSelection_ReturnsEmpty() {
+        List<Perfume> perfumes = getPerfumes();
+        when(perfumeRepository.findAll()).thenReturn(perfumes);
+
+        List<PerfumePlpDto> result = perfumeService.findAllPlpFiltered("INVALID_SELECTION", null, null, null, null, null);
+
+        assertEquals(0, result.size());
+        verify(perfumeRepository).findAll();
+    }
 
     @Test
     void GetBySelectionUnisex() {
