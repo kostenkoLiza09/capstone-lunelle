@@ -1,11 +1,10 @@
 import Banner2 from "../../assets/images/infoBanner/Banner2.jpg";
 import Banner3 from "../../assets/images/infoBanner/Banner3.jpg";
 import Banner4 from "../../assets/images/infoBanner/Banner4.jpg";
-import {useEffect, useState} from "react";
-import {useLocation} from "react-router-dom";
 import TomFord from "../../assets/images/home/TomFord.jpg";
 
 import './InfoBanner.css'
+import {useLocation} from "react-router-dom";
 
 
 
@@ -13,13 +12,9 @@ const banners = [TomFord, Banner2, Banner3, Banner4];
 
 const InfoBanner = () => {
 
-        const [current, setCurrent] = useState<string>(banners[0]);
-        const location = useLocation();
-
-        useEffect(() => {
-            const randomIndex = Math.floor(Math.random() * banners.length);
-            setCurrent(banners[randomIndex]);
-        }, [location.pathname]);
+    const location = useLocation();
+    const index = location.pathname.length % banners.length;
+    const current = banners[index];
     return (
         <>
             <div className="section">

@@ -3,18 +3,15 @@ import type { PerfumesPlp } from "../../interfaces/PerfumesPlp";
 import { useEffect, useState } from "react";
 import './PerfumeCarousel.css';
 
-function getRandomPerfumes(perfumes: PerfumesPlp[], count: number): PerfumesPlp[] {
-    return [...perfumes].sort(() => 0.5 - Math.random()).slice(0, count);
-}
-
 export default function PerfumeCarousel() {
     const [displayedPerfumes, setDisplayedPerfumes] = useState<PerfumesPlp[]>([]);
 
     useEffect(() => {
         axios.get('/api/perfumes').then(res => {
-            setDisplayedPerfumes(getRandomPerfumes(res.data, 6));
+            setDisplayedPerfumes(res.data.slice(0, 6));
         });
     }, []);
+
 
     return (
         <div className="perfume-carousel-wrapper">
