@@ -4,6 +4,8 @@ import axios from "axios";
 import type { PerfumeDetails } from "../../interfaces/PerfumeDetails.ts";
 import './PerfumeDetails.css';
 import type { PerfumeVariant } from "../../interfaces/PerfumeVariant.ts";
+import PerfumeCarousel from "../../components/perfumeCarousel/PerfumeCarousel.tsx";
+import InfoBanner from "../../components/InfoBanner/InfoBanner.tsx";
 
 export default function PerfumeDetails() {
     const { id } = useParams<{ id: string }>();
@@ -28,6 +30,8 @@ export default function PerfumeDetails() {
     if (!perfume) return <div>Loading...</div>;
 
     return (
+        <>
+        <div className="perfume-details-page">
         <div className="perfume-details">
             <img src={perfume.imageURL} alt={perfume.name} />
             <div className="perfume-text">
@@ -77,5 +81,18 @@ export default function PerfumeDetails() {
                 <button className="buy-button">BUY</button>
             </div>
         </div>
+
+            <div className="perfume-section">
+                <PerfumeCarousel />
+            </div>
+        </div>
+            <div>
+                <InfoBanner/>
+            </div>
+
+        </>
+
+
+
     );
 }
