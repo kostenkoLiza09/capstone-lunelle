@@ -166,6 +166,61 @@ class PerfumeServiceTest {
     }
 
     @Test
+    void findAllPlpFiltered() {
+        List<Perfume> perfumes = getPerfumes();
+        when(perfumeRepository.findAll()).thenReturn(perfumes);
+        List<PerfumePlpDto> resultAll = perfumeService.findAllPlpFiltered(null, null, null, null, null, null);
+        assertEquals(2, resultAll.size());
+        List<PerfumePlpDto> resultBrand = perfumeService.findAllPlpFiltered(null, "CHANEL", null, null, null, null);
+        assertEquals(1, resultBrand.size());
+        assertEquals("id1", resultBrand.get(0).id());
+        List<PerfumePlpDto> resultVolume = perfumeService.findAllPlpFiltered(null, null, "ML50", null, null, null);
+        assertEquals(1, resultVolume.size());
+        assertEquals("id2", resultVolume.get(0).id());
+        List<PerfumePlpDto> resultSeason = perfumeService.findAllPlpFiltered(null, null, null, null, "WINTER", null);
+        assertEquals(1, resultSeason.size());
+        assertEquals("id2", resultSeason.get(0).id());
+        List<PerfumePlpDto> resultNotes = perfumeService.findAllPlpFiltered(null, null, null, null, null, "ROSE");
+        assertEquals(1, resultNotes.size());
+        assertEquals("id1", resultNotes.get(0).id());
+        List<PerfumePlpDto> resultCombo = perfumeService.findAllPlpFiltered(null, "CHANEL", null, null, "SUMMER", null);
+        assertEquals(1, resultCombo.size());
+        assertEquals("id1", resultCombo.get(0).id());
+        verify(perfumeRepository, times(6)).findAll();
+    }
+
+    private static List<Perfume> getPerfumes() {
+        Perfume perfume1 = new Perfume(
+                "id1",
+                "Perfume One",
+                "imageURL1",
+                "description1",
+                List.of(new PerfumeVariant(Volume.ML30, 49.99f)),
+                Selection.WOMEN,
+                Brand.CHANEL,
+                PerfumeFamily.FLORAL,
+                List.of(Season.SPRING, Season.SUMMER),
+                List.of(Notes.ROSE, Notes.JASMINE)
+        );
+
+        Perfume perfume2 = new Perfume(
+                "id2",
+                "Perfume Two",
+                "imageURL2",
+                "description2",
+                List.of(new PerfumeVariant(Volume.ML50, 59.99f)),
+                Selection.MEN,
+                Brand.ARMANI,
+                PerfumeFamily.ORIENTAL,
+                List.of(Season.WINTER),
+                List.of(Notes.MUSK, Notes.OUD)
+        );
+
+        List<Perfume> perfumes = List.of(perfume1, perfume2);
+        return perfumes;
+    }
+
+    @Test
     void GetBySelectionWomen() {
         Perfume perfume = new Perfume("id1", "Name", "url", "desc",
                 List.of(new PerfumeVariant(Volume.ML30, 49.99f)), Selection.WOMEN,
