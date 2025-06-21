@@ -16,7 +16,7 @@ const InfoBanner = () => {
     const index = location.pathname.length % banners.length;
     const current = banners[index];
     return (
-        <>
+        <div>
             <div className="section">
                 <img src={current} alt="Info Banner"/>
                 <div className="text-columns">
@@ -32,7 +32,7 @@ const InfoBanner = () => {
                     </div>
                 </div>
             </div>
-        </>
+        </div>
     );
 }
 

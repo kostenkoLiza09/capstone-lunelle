@@ -56,19 +56,21 @@ export default function PerfumeDetails() {
                     </button>
                     {showOptions && (
                         <ul className="size-options">
-                            {perfume.variants.map((variant, index) => (
-                                <li
-                                    key={index}
-                                    className="size-option"
-                                    onClick={() => {
-                                        setSelectedVariant(variant);
-                                        setShowOptions(false);
-                                    }}
-                                >
-                                    {variant.volume} ml
+                            {perfume.variants.map((variant) => (
+                                <li key={variant.volume}>
+                                    <button
+                                        className="size-option"
+                                        onClick={() => {
+                                            setSelectedVariant(variant);
+                                            setShowOptions(false);
+                                        }}
+                                    >
+                                        {variant.volume} ml
+                                    </button>
                                 </li>
                             ))}
                         </ul>
+
                     )}
                     {selectedVariant && (
                         <div className="price-display">

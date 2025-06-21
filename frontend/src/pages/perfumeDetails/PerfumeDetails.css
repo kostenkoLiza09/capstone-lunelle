@@ -15,6 +15,18 @@
     font-size: 0.65rem;
     font-weight: 400;
 }
+.size-option {
+    all: unset;
+    display: block;
+    padding: 0.4rem 0.8rem;
+    cursor: pointer;
+    white-space: nowrap;
+    width: 100%;
+    text-align: left;
+    font-family: inherit;
+    font-size: inherit;
+    color: inherit;
+}
 .h1{
     font-family: BrilliantCutPro, Verdana, sans-serif;
     font-size: 10px;
@@ -115,14 +127,9 @@
     width: max-content;
 }
 
-.size-option {
-    padding: 0.4rem 0.8rem;
-    cursor: pointer;
-    white-space: nowrap;
-}
 
 .size-option:hover {
-    background-color: #f5f5f5;
+    font-weight: bold;
 }
 
 .price-display {

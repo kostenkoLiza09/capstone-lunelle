@@ -17,6 +17,22 @@ const Collections: React.FC = () => {
     const [seasonsFilter, setSeasonsFilter] = useState<string[]>([]);
     const [notesFilter, setNotesFilter] = useState<string[]>([]);
 
+    const addToFilter = (
+        setter: React.Dispatch<React.SetStateAction<string[]>>,
+        values: string[],
+        value: string
+    ) => {
+        setter([...values, value]);
+    };
+
+    const removeFromFilter = (
+        setter: React.Dispatch<React.SetStateAction<string[]>>,
+        values: string[],
+        value: string
+    ) => {
+        setter(values.filter(v => v !== value));
+    };
+
     const handleCheckboxChange = (
         setter: React.Dispatch<React.SetStateAction<string[]>>,
         values: string[],
@@ -24,9 +40,9 @@ const Collections: React.FC = () => {
         checked: boolean
     ) => {
         if (checked) {
-            setter([...values, value]);
+            addToFilter(setter, values, value);
         } else {
-            setter(values.filter(v => v !== value));
+            removeFromFilter(setter, values, value);
         }
     };
 
