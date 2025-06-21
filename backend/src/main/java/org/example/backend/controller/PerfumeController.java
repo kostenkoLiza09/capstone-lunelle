@@ -4,8 +4,7 @@ import org.example.backend.model.dto.PerfumeDto;
 import org.example.backend.model.plp.PerfumePlpDto;
 import org.example.backend.model.record.Perfume;
 import org.example.backend.service.PerfumeService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,9 +20,17 @@ public class PerfumeController {
         this.perfumeService = perfumeService;
     }
     @GetMapping("/perfumes")
-    public List<PerfumePlpDto> findAll() {
-        return perfumeService.findAllPlpFiltered(null, null, null, null, null, null);
+    public List<PerfumePlpDto> findAllFiltered(
+            @RequestParam(required = false) String selection,
+            @RequestParam(required = false) String brand,
+            @RequestParam(required = false) String volume,
+            @RequestParam(required = false) String perfumeFamily,
+            @RequestParam(required = false) String seasons,
+            @RequestParam(required = false) String notes
+    ) {
+        return perfumeService.findAllPlpFiltered(selection, brand, volume, perfumeFamily, seasons, notes);
     }
+
 
     @GetMapping("/perfumes/selection")
     public List<PerfumePlpDto> getPerfumesBySelection(@RequestParam String selection) {
