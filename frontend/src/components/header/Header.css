@@ -90,3 +90,50 @@ header {
     margin-right: 30px;
     color: black;
 }
+.search-wrapper {
+    position: relative;
+}
+.search-result-item {
+    border: 1px solid red !important;
+    background-color: yellow !important;
+    color: black !important;
+    padding: 10px !important;
+    display: block !important;
+    text-decoration: none !important;
+}
+
+
+.search-input {
+    padding: 8px 12px;
+    font-size: 14px;
+    width: 250px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    outline: none;
+    color: black;
+    background-color: white;
+}
+
+.search-input:focus {
+    border-color: #007bff;
+}
+
+.search-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 250px;
+    max-height: 300px;
+    overflow-y: auto;
+    background-color: white !important;
+    border: 1px solid black !important;
+    color: black !important;
+    z-index: 10000 !important;
+    box-shadow: 0 0 5px rgba(0,0,0,0.3);
+}
+
+
+.search-result-item:hover {
+    background-color: #ddd !important;
+}
+

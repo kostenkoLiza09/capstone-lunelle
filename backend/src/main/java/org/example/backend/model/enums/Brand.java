@@ -1,7 +1,10 @@
 package org.example.backend.model.enums;
 
+import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.Getter;
+import lombok.ToString;
 
+@ToString
 @Getter
 public enum Brand {
     BYREDO("Byredo"),
@@ -21,6 +24,11 @@ public enum Brand {
 
     Brand(String value) {
         this.value = value;
+    }
+
+    @JsonValue
+    public String getNote() {
+        return value;
     }
 }
 

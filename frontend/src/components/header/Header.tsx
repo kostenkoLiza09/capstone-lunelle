@@ -8,6 +8,7 @@ import {Link} from "react-router-dom";
 
 
 export default function Header(){
+
     return (
         <>
             <header>
@@ -25,20 +26,20 @@ export default function Header(){
                 </div>
 
 
-                <div className="top-right icon-bar">
-                    <a href={ "/search"}>
-                    <img src={searchIcon} alt="Search" />
-                    </a>
-                    <a href="/login">
-                        <img src={loginIcon} alt="Login" />
-                    </a>
-                    <a href="/like">
-                    <img src={likeIcon} alt="Like" />
-                    </a>
-                    <a href="/basket">
-                    <img src={basketIcon} alt="Basket" />
-                    </a>
-                </div>
+                    <div className="top-right icon-bar">
+                        <a>
+                            <img src={searchIcon} alt="Search" />
+                        </a>
+                        <a href="/login">
+                            <img src={loginIcon} alt="Login" />
+                        </a>
+                        <a href="/like">
+                            <img src={likeIcon} alt="Like" />
+                        </a>
+                        <a href="/basket">
+                            <img src={basketIcon} alt="Basket" />
+                        </a>
+                    </div>
                 </div>
 
                 <div className={"nav-bar"}>

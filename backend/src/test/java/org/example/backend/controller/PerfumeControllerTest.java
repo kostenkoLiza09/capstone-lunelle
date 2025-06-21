@@ -6,12 +6,14 @@ import org.example.backend.model.record.Perfume;
 import org.example.backend.model.record.PerfumeVariant;
 import org.example.backend.service.PerfumeService;
 import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.TestConfiguration;
+
+import org.springframework.context.annotation.Bean;
 import org.springframework.http.MediaType;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.context.TestConfiguration;
-import org.springframework.context.annotation.Bean;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.mockito.Mockito.when;
@@ -27,6 +29,7 @@ import static org.hamcrest.Matchers.is;
 
 
 @WebMvcTest(PerfumeController.class)
+@AutoConfigureMockMvc(addFilters = false)
 class PerfumeControllerTest {
 
     @Autowired
@@ -36,7 +39,7 @@ class PerfumeControllerTest {
     private PerfumeService perfumeService;
 
     @TestConfiguration
-    static class Config {
+    static class TestConfig {
         @Bean
         public PerfumeService perfumeService() {
             return Mockito.mock(PerfumeService.class);
@@ -45,36 +48,37 @@ class PerfumeControllerTest {
 
     @Test
     void findAll() throws Exception {
-
         List<PerfumePlpDto> perfumes = List.of(
                 new PerfumePlpDto("id1", "name1", "imageURL1", 49.99f, Volume.ML30),
                 new PerfumePlpDto("id2", "name2", "imageURL2", 59.99f, Volume.ML20)
-    );
+        );
 
-        when(perfumeService.findAllPlp()).thenReturn(perfumes);
+        when(perfumeService.findAllPlpFiltered(null, null, null, null, null, null))
+                .thenReturn(perfumes);
+
         mockMvc.perform(get("/api/perfumes"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].name", is("name1")))
                 .andExpect(jsonPath("$[1].price", is(59.99)));
     }
 
-    @Test
-    void addRecipe() throws Exception{
 
+    @Test
+    void addPerfume() throws Exception{
         String request = """
                 {
                        "name": "Name",
                        "imageURL": "imageURL",
                        "description": "description",
                        "variants": [
-                         {"volume": "ML30", "price": 49.99},
-                         {"volume": "ML50", "price": 59.99}
+                         {"volume": "30", "price": 49.99},
+                         {"volume": "50", "price": 59.99}
                        ],
-                       "selection": "WOMEN",
-                       "brand": "ARMANI",
-                       "perfumeFamily": "AROMATIC",
-                       "seasons": ["SPRING", "SUMMER"],
-                       "notes": ["AQUATIC", "VANILLA"]
+                       "selection": "Women",
+                       "brand": "Armani",
+                       "perfumeFamily": "Aromatic",
+                       "seasons": ["Spring", "Summer"],
+                       "notes": ["Aquatic", "Vanilla"]
                      }
                 """;
         Perfume createdPerfume = new Perfume(
@@ -111,17 +115,16 @@ class PerfumeControllerTest {
                        "imageURL": "imageURL",
                        "description": "description",
                        "variants": [
-                         {"volume": "ML30", "price": 49.99},
-                         {"volume": "ML50", "price": 59.99}
+                         {"volume": "30", "price": 49.99},
+                         {"volume": "50", "price": 59.99}
                        ],
-                       "selection": "WOMEN",
-                       "brand": "ARMANI",
-                       "perfumeFamily": "AROMATIC",
-                       "seasons": ["SPRING", "SUMMER"],
-                       "notes": ["AQUATIC", "VANILLA"]
+                       "selection": "Women",
+                       "brand": "Armani",
+                       "perfumeFamily": "Aromatic",
+                       "seasons": ["Spring", "Summer"],
+                       "notes": ["Aquatic", "Vanilla"]
                      }
                 """;
-
         Perfume perfume = new Perfume(id, "Name3", "imageURL", "description",
                 List.of(new PerfumeVariant(Volume.ML30, 49.99f), new PerfumeVariant(Volume.ML50, 59.99f)),
                 Selection.WOMEN, Brand.ARMANI, PerfumeFamily.AROMATIC, List.of(Season.SPRING, Season.SUMMER),

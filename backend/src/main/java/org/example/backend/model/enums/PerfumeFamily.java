@@ -1,5 +1,6 @@
 package org.example.backend.model.enums;
 
+import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.Getter;
 
 @Getter
@@ -20,5 +21,10 @@ public enum PerfumeFamily {
 
     PerfumeFamily(String familyName) {
         this.familyName = familyName;
+
+    }
+    @JsonValue
+    public String getFamilyName() {
+        return familyName;
     }
 }
