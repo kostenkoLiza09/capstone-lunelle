@@ -16,7 +16,6 @@ class CustomOAuth2UserServiceTest {
     void loadUser_simple() {
         UserRepository userRepo = mock(UserRepository.class);
 
-        OAuth2UserRequest userRequest = mock(OAuth2UserRequest.class);
 
         CustomOAuth2UserService service = new CustomOAuth2UserService(userRepo) {
             @Override
