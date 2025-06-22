@@ -1,4 +1,5 @@
 package org.example.backend.security;
+
 import org.example.backend.model.record.AppUser;
 import org.example.backend.repository.UserRepository;
 import org.junit.jupiter.api.Test;
@@ -60,9 +61,7 @@ class AuthControllerTest {
 
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.username").value("updatedUser"))
-
                 .andExpect(jsonPath("$.city").value("Hamburg"));
-
     }
 
 }
