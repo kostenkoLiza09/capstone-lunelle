@@ -74,8 +74,29 @@ const Collections: React.FC = () => {
         <>
             <Banner />
             <div className="perfume-page">
+
                 <div className="perfume-filter">
-                    <div>
+                    <button
+                        onClick={() => {
+                            setBrandFilter([]);
+                            setVolumeFilter([]);
+                            setPerfumeFamilyFilter([]);
+                            setSeasonsFilter([]);
+                            setNotesFilter([]);
+                        }}
+                        style={{
+                            backgroundColor: '#2baeb2',
+                            color: 'white',
+                            padding: '8px 12px',
+                            marginBottom: '1rem',
+                            border: 'none',
+                            borderRadius: '4px',
+                            cursor: 'pointer',
+                            fontWeight: 'bold'
+                        }}
+                    >
+                        Reset Filters
+                    </button>
                         <h3>Brand</h3>
                         {["BYREDO", "KILIAN", "INITIO", "GUCCI", "DIOR", "PRADA", "CHANEL",
                             "VERSACE", "DOLCEGABBANA", "ARMANI", "ZARA", "CALVINKLEIN"
@@ -89,7 +110,6 @@ const Collections: React.FC = () => {
                                 {brand}
                             </label>
                         ))}
-                    </div>
 
                     <div>
                         <h3>Volume</h3>
@@ -162,7 +182,7 @@ const Collections: React.FC = () => {
                             <h3>{p.name}</h3>
                             <p>
                                 <span>{p.price} €</span>
-                                <span>{p.volume}</span>
+                                <span>{p.volume} ml</span>
                             </p>
                             <button onClick={() => navigate(`/perfumes/details/${p.id}`)}>BUY</button>
                         </div>

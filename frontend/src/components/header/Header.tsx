@@ -5,9 +5,14 @@ import likeIcon from '../../assets/images/header/Like.svg';
 import basketIcon from '../../assets/images/header/Basket.svg';
 import logoIcon from '../../assets/images/header/Logo.svg';
 import {Link} from "react-router-dom";
+import type {AppUser} from "../../interfaces/AppUser.ts";
 
 
-export default function Header(){
+export default function Header({ user, login, logout }: {
+    user: AppUser | null | undefined,
+    login: () => void,
+    logout: () => void
+}) {
 
     return (
         <>
@@ -25,21 +30,37 @@ export default function Header(){
                     </a>
                 </div>
 
-
                     <div className="top-right icon-bar">
                         <a>
                             <img src={searchIcon} alt="Search" />
                         </a>
-                        <a href="/login">
-                            <img src={loginIcon} alt="Login" />
-                        </a>
+
+                        {user ? (
+                            <div className="user-dropdown">
+                                <img src={user.avatarUrl} alt="User avatar" />
+                                <div className="dropdown-content">
+                                    <p>User: {user?.username || "Guest"}</p>
+
+
+                                    <a onClick={logout}>Logout</a>
+                                </div>
+                            </div>
+                        ) : (
+                            <a onClick={login}>
+                                <img src={loginIcon} alt="Login" />
+                            </a>
+                        )}
+
+
+
                         <a href="/like">
                             <img src={likeIcon} alt="Like" />
                         </a>
-                        <a href="/basket">
-                            <img src={basketIcon} alt="Basket" />
+                        <a href="/cart">
+                            <img src={basketIcon} alt="Bucket" />
                         </a>
                     </div>
+
                 </div>
 
                 <div className={"nav-bar"}>

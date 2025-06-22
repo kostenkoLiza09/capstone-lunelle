@@ -39,7 +39,6 @@ class ArticlesServiceTest {
     void tearDown() throws Exception {
         mocks.close();
     }
-    LocalDateTime date = LocalDateTime.of(1221, 1, 12, 0, 0);
 
     @Test
     void createArticles() {

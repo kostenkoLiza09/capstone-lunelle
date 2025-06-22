@@ -32,7 +32,7 @@ function App() {
 
     useEffect(() => {
         loadUser();
-    }, []);
+    }, );
 
     const loadUser = () => {
         axios
