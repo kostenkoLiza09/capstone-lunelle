@@ -1,6 +1,7 @@
 package org.example.backend.controller;
 
 import org.example.backend.model.dto.ArticlesDto;
+import org.example.backend.model.plp.ArticlesPlpDto;
 import org.example.backend.model.record.Articles;
 import org.example.backend.service.ArticlesService;
 import org.springframework.web.bind.annotation.*;
@@ -18,8 +19,8 @@ public class ArticlesController {
     }
 
     @GetMapping
-    public List<ArticlesDto> findAllArticles() {
-        return articlesService.findAll();
+    public List<ArticlesPlpDto> findAllArticles() {
+        return articlesService.findAllPlp();
     }
 
     @GetMapping("/{id}")

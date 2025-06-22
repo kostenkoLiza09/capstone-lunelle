@@ -2,6 +2,7 @@ package org.example.backend.service;
 
 import org.example.backend.exception.PerfumeNotFoundException;
 import org.example.backend.model.dto.ArticlesDto;
+import org.example.backend.model.plp.ArticlesPlpDto;
 import org.example.backend.model.record.Articles;
 import org.example.backend.repository.ArticlesRepository;
 import org.springframework.stereotype.Service;
@@ -23,8 +24,7 @@ public class ArticlesService {
                 null,
                 articles.name(),
                 articles.imgUrl(),
-                articles.description(),
-                articles.localDateTime()
+                articles.description()
         );
         return articlesRepository.save(articles1);
     }
@@ -37,8 +37,7 @@ public class ArticlesService {
                 oldData.id(),
                 articles.name(),
                 articles.imgUrl(),
-                articles.description(),
-                articles.localDateTime()
+                articles.description()
         );
 
         return articlesRepository.save(articles1);
@@ -50,16 +49,17 @@ public class ArticlesService {
         articlesRepository.delete(articles);
     }
 
-    public List<ArticlesDto> findAll() {
+    public List<ArticlesPlpDto> findAllPlp() {
         return articlesRepository.findAll().stream()
-                .map(article -> new ArticlesDto(
+                .map(article -> new ArticlesPlpDto(
+                        article.id(),
                         article.name(),
                         article.imgUrl(),
-                        article.description(),
-                        article.localDateTime()
+                        article.description()
                 ))
                 .toList();
     }
+
 
     public Articles findById (String id){
         return articlesRepository.findById(id)

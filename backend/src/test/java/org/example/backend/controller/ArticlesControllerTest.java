@@ -2,6 +2,7 @@ package org.example.backend.controller;
 
 import org.example.backend.model.dto.ArticlesDto;
 
+import org.example.backend.model.plp.ArticlesPlpDto;
 import org.example.backend.model.record.Articles;
 
 import org.example.backend.service.ArticlesService;
@@ -16,7 +17,6 @@ import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.hamcrest.Matchers.is;
@@ -31,8 +31,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class ArticlesControllerTest {
     @Autowired
     private MockMvc mockMvc;
-    LocalDateTime date = LocalDateTime.of(1221, 1, 12, 0, 0);
-
     @Autowired
     private ArticlesService articlesService;
 
@@ -46,21 +44,26 @@ class ArticlesControllerTest {
 
     @Test
     void findAllArticles() throws Exception {
-        List<ArticlesDto> list = List.of(
-                new ArticlesDto("name", "img", "description", date),
-                new ArticlesDto("name", "img", "description", date)
+        List<ArticlesPlpDto> list = List.of(
+                new ArticlesPlpDto("id","name", "img", "description"),
+                new ArticlesPlpDto("id","name", "img", "description")
         );
 
-        when(articlesService.findAll()).thenReturn(list);
+        when(articlesService.findAllPlp()).thenReturn(list);
+
         mockMvc.perform(get("/api/articles"))
-                .andExpect(status().isOk());
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.length()").value(list.size()))
+                .andExpect(jsonPath("$[0].name").value("name"));
+
     }
+
 
     @Test
     void findById() throws Exception {
         String id = "id";
         Articles articles = new Articles(
-                id, "name", "img", "description", date);
+                id, "name", "img", "description");
 
         when(articlesService.findById(id)).thenReturn(articles);
         mockMvc.perform(get("/api/articles/" + id))
@@ -70,7 +73,7 @@ class ArticlesControllerTest {
 
     @Test
     void createArticles() throws Exception {
-        Articles savedArticle = new Articles("id", "Name", "img", "description", LocalDateTime.of(1221, 1, 12, 0, 0));
+        Articles savedArticle = new Articles("id", "Name", "img", "description");
 
         when(articlesService.createArticles(any(ArticlesDto.class))).thenReturn(savedArticle);
 
@@ -104,7 +107,7 @@ class ArticlesControllerTest {
          "localDateTime": "1221-01-12T00:00:00"
     }
     """;
-        Articles articles = new Articles(id, "Name3", "imageURL", "description", date);
+        Articles articles = new Articles(id, "Name3", "imageURL", "description");
 
         when(articlesService.updateArticles(Mockito.eq(id), Mockito.any())).thenReturn(articles);
 

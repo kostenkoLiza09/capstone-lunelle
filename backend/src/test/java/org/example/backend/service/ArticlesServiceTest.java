@@ -1,6 +1,7 @@
 package org.example.backend.service;
 
 import org.example.backend.model.dto.ArticlesDto;
+import org.example.backend.model.plp.ArticlesPlpDto;
 import org.example.backend.model.record.Articles;
 import org.example.backend.repository.ArticlesRepository;
 
@@ -43,8 +44,8 @@ class ArticlesServiceTest {
     @Test
     void createArticles() {
 
-        ArticlesDto articles = new ArticlesDto("name", "img", "description",  date);
-         Articles expected = new Articles("id", articles.name(), articles.imgUrl(), articles.description(), articles.localDateTime());
+        ArticlesDto articles = new ArticlesDto("name", "img", "description");
+         Articles expected = new Articles("id", articles.name(), articles.imgUrl(), articles.description());
         when(articlesRepository.save(ArgumentMatchers.any(Articles.class))).thenReturn(expected);
         Articles result = articlesService.createArticles(articles);
         verify(articlesRepository).save(ArgumentMatchers.any(Articles.class));
@@ -53,11 +54,11 @@ class ArticlesServiceTest {
 
     @Test
     void updateArticles() {
-        Articles oldData = new Articles("id","name2", "img2", "description2",  date);
+        Articles oldData = new Articles("id","name2", "img2", "description2" );
 
-        ArticlesDto updateData  = new ArticlesDto("name", "img", "description2",  date );
+        ArticlesDto updateData  = new ArticlesDto("name", "img", "description2" );
 
-        Articles updatedData = new Articles("id","name2", "img2", "description2",  date);
+        Articles updatedData = new Articles("id","name2", "img2", "description2");
 
         when(articlesRepository.findById("id")).thenReturn(Optional.of(oldData));
         when(articlesRepository.save(any(Articles.class))).thenReturn(updatedData);
@@ -70,39 +71,48 @@ class ArticlesServiceTest {
     void deleteArticles() {
         String id = "id";
 
-        Articles articles = new Articles(id,"name2", "img2", "description2",  date);when(articlesRepository.findById(id)).thenReturn(Optional.of(articles));
+        Articles articles = new Articles(id,"name2", "img2", "description2");when(articlesRepository.findById(id)).thenReturn(Optional.of(articles));
         articlesService.deleteArticles(id);
         assertEquals(id, articles.id());
         verify(articlesRepository).delete(articles);
     }
 
     @Test
-    void findAll() {
+    void findAllPlp() {
         List<Articles> list = List.of(
-                new Articles("id", "name1", "img1", "description1", date),
-                new Articles("id1", "name2", "img2", "description2", date)
+                new Articles("id1", "name1", "img1", "description1"),
+                new Articles("id2", "name2", "img2", "description2")
         );
 
         when(articlesRepository.findAll()).thenReturn(list);
 
-        List<ArticlesDto> result = articlesService.findAll(); // предполагаем, что маппинг происходит в сервисе
+        List<ArticlesPlpDto> result = articlesService.findAllPlp();
 
         assertEquals(2, result.size());
 
-        ArticlesDto firstDto = result.get(0);
-        ArticlesDto secondDto = result.get(1);
+        ArticlesPlpDto firstDto = result.get(0);
+        ArticlesPlpDto secondDto = result.get(1);
 
+        assertEquals("id1", firstDto.id());
         assertEquals("name1", firstDto.name());
+        assertEquals("img1", firstDto.imgUrl());
+        assertEquals("description1", firstDto.description());
+
+        assertEquals("id2", secondDto.id());
         assertEquals("name2", secondDto.name());
+        assertEquals("img2", secondDto.imgUrl());
+        assertEquals("description2", secondDto.description());
 
         verify(articlesRepository).findAll();
     }
+
 
     @Test
     void findById() {
         String id = "id";
 
-        Articles articles = new Articles(id,"name2", "img2", "description2",  date);when(articlesRepository.findById(id)).thenReturn(Optional.of(articles));
+        Articles articles = new Articles(id,"name2", "img2", "description2");
+        when(articlesRepository.findById(id)).thenReturn(Optional.of(articles));
         articlesService.findById(id);
         assertEquals(id, articles.id());
         verify(articlesRepository).findById(id);
