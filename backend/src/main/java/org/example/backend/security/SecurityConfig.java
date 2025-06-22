@@ -15,8 +15,8 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-
-                .csrf(AbstractHttpConfigurer::disable)// Disable CSRF because this REST API uses token-based auth, not cookies.
+                // NOSONAR: disabling CSRF because this is a REST API using token-based authentication
+                .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(a -> a
                         .requestMatchers("/api/auth/me").authenticated()
                         .requestMatchers("/api/secured").authenticated()
