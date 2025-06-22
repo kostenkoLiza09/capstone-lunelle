@@ -15,7 +15,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(csrf -> csrf
-                        .ignoringRequestMatchers("/api/**")
+                        .ignoringRequestMatchers("/api/**")// Make sure disabling CSRF for API is safe here
                 )
                 .authorizeHttpRequests(a -> a
                         .requestMatchers("/api/auth/me").authenticated()
