@@ -8,15 +8,19 @@ import Brands from "./pages/navbar/brands/Brands.tsx";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import ProtectedRoute from "./ProtectedRoute.tsx";
+import type {AppUser} from "./interfaces/AppUser.ts";
+import { UserContext } from "./context/UserContextType.ts";
+import Bucket from "./pages/topbar/bucket/Bucket.tsx";
+import Stories from "./pages/navbar/stories/Stories.tsx";
+import StoriesDetails from "./pages/navbar/stories/storiesDetails/StoriesDetails.tsx";
+
+
+
 
 function App() {
-    const [user, setUser] = useState<string | null | undefined>(undefined);
+    const [user, setUser] = useState<AppUser | null | undefined>(undefined);
+    const getHost = () => "http://localhost:8080";
 
-    function getHost() {
-        return window.location.host === "localhost:5173"
-            ? "http://localhost:8080"
-            : "https://capstone-lunelle-latest.onrender.com";
-    }
 
     function login() {
         window.open(getHost() + "/oauth2/authorization/github", "_self");
@@ -25,20 +29,22 @@ function App() {
     function logout() {
         window.open(getHost() + "/logout", "_self");
     }
+
+    useEffect(() => {
+        loadUser();
+    }, );
+
     const loadUser = () => {
         axios
-            .get(getHost() + "/api/auth/me", { withCredentials: true })
+            .get<AppUser>(getHost() + "/api/auth/me", { withCredentials: true })
             .then((response) => setUser(response.data))
             .catch(() => setUser(null));
     };
 
-    useEffect(() => {
-        loadUser();
-    }, []);
-
     return (
         <>
-            <Header />
+            <UserContext.Provider value={{ user, setUser }}>
+            <Header user={user} login={login} logout={logout} />
             <Routes>
                 <Route path="/collection" element={<Collections />} />
                 <Route path="/home" element={<Home />} />
@@ -46,14 +52,15 @@ function App() {
                 <Route path="/perfumes/details/:id" element={<PerfumeDetails />} />
                 <Route path="/" element={<Home />} />
                 <Route path="/brands" element={<Brands />} />
+                <Route path="/stories" element={<Stories/>} />
+                <Route path="/stories/:id" element={<StoriesDetails />} />
                 <Route element={<ProtectedRoute user={user} />}>
                     <Route>Dashboard</Route>
                 </Route>
+                <Route path="/cart" element={<Bucket />} />
             </Routes>
-
-            <button onClick={login}>Login</button>
-            <button onClick={logout}>Logout</button>
             <Footer />
+            </UserContext.Provider>
         </>
     );
 }

@@ -17,7 +17,7 @@
 }
 
 .perfume-carousel-wrapper::-webkit-scrollbar-thumb {
-    background-color: #C04040;
+    background-color: #2baeb2;
     border-radius: 4px;
 }
 
@@ -77,9 +77,9 @@
 
 .perfume-card button {
     width: 100%;
-    border: 1px solid #C04040;
+    border: 1px solid #2baeb2;
     background-color: transparent;
-    color: #C04040;
+    color: #2baeb2;
     padding: 0.5rem 1rem;
     cursor: pointer;
     font-weight: 500;
@@ -87,7 +87,7 @@
 }
 
 .perfume-card button:hover {
-    background-color: #C04040;
+    background-color: #2baeb2;
     color: #fff;
 }
 

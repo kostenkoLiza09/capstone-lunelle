@@ -1,14 +1,13 @@
-import {Navigate, Outlet} from "react-router-dom";
-
+import { Navigate, Outlet } from "react-router-dom";
+import type { AppUser } from "./interfaces/AppUser.ts";
 
 type ProtectedRouteProps = {
-    user: string | undefined | null;
-}
+    user: AppUser | undefined | null;
+};
 
 function ProtectedRoute(props: Readonly<ProtectedRouteProps>) {
-
     if (props.user === undefined) {
-        return <h3>loading</h3>
+        return <h3>loading</h3>;
     }
 
     return (
@@ -16,7 +15,6 @@ function ProtectedRoute(props: Readonly<ProtectedRouteProps>) {
             {props.user ? <Outlet /> : <Navigate to={"/"} />}
         </>
     );
-
 }
 
 export default ProtectedRoute;

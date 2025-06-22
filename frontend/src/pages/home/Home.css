@@ -56,7 +56,7 @@ html, body {
         border-bottom: 1px solid rgba(169, 169, 169, 1);
     }
     .mainImg a:hover {
-        color: #C04040;
+        color: #2baeb2;
         border-bottom-color: rgba(169, 169, 169, 0);
     }
 
@@ -98,7 +98,7 @@ html, body {
     }
 
     .gender-section h3:hover {
-color: #C04040;
+color: #2baeb2;
     }
 
     .gender-section a{
@@ -146,7 +146,7 @@ color: #C04040;
     }
 
     .miniature-set a:hover {
-        color: #C04040;
+        color: #2baeb2;
         border-bottom-color: rgba(169, 169, 169, 0);
     }
 
@@ -193,14 +193,7 @@ color: #C04040;
     }
 
     .article a:hover {
-        color: #C04040;
+        color:#2baeb2;
         border-bottom-color: rgba(169, 169, 169, 0);
     }
-
-
-
-
 }
-
-
-

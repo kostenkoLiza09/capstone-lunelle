@@ -12,7 +12,7 @@
     flex: 1;
     padding: 20px;
     justify-content: start;
-
+    min-height: 500px;
 }
 
 .perfume-card:hover {
@@ -49,9 +49,9 @@
 
 .perfume-card button {
     width: 100%;
-    border: 1px solid #C04040;
+    border: 1px solid #2baeb2;
     background-color: transparent;
-    color: #C04040;
+    color: #2baeb2;
     padding: 0.5rem 1rem;
     cursor: pointer;
     font-weight: 500;
@@ -59,24 +59,8 @@
 }
 
 .perfume-card button:hover {
-    background-color: #C04040;
+    background-color: #2baeb2;
     color: #fff;
-}
-
-.perfume-filter {
-    width: 220px;
-    padding: 20px;
-    border-right: 1px solid #e0e0e0;
-    font-family: 'Arial', sans-serif;
-    font-size: 14px;
-    color: #333;
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
-    top: 20px;
-    height: fit-content;
-    background-color: #fff;
-    position: static;
 }
 
 .perfume-filter h1 {
@@ -104,6 +88,34 @@
 }
 
 .perfume-filter input[type="checkbox"] {
-    accent-color: #C04040;
+    accent-color: #2baeb2;
     cursor: pointer;
+}
+.perfume-filter {
+    width: 220px;
+    padding: 20px;
+    border-right: 1px solid #e0e0e0;
+    font-family: 'Arial', sans-serif;
+    font-size: 14px;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    background-color: #fff;
+
+    max-height: calc(100vh - 100px);
+    overflow-y: auto;
+    position: sticky;
+    top: 80px;
+    scrollbar-width: thin;
+    scrollbar-color: #ccc transparent;
+}
+
+.perfume-filter::-webkit-scrollbar {
+    width: 6px;
+}
+
+.perfume-filter::-webkit-scrollbar-thumb {
+    background-color: #ccc;
+    border-radius: 4px;
 }

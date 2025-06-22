@@ -1,0 +1,39 @@
+.story-details-wrapper {
+    padding: 60px 15%;
+    font-family: BrilliantCutPro, Verdana, sans-serif;
+    font-size: 0.65rem;
+    font-weight: 50;
+    background: linear-gradient(to bottom, #ffffff, #f9f9f9, #ffffff);
+    color: #333;
+}
+
+.story-container {
+    background: #fff;
+    padding: 30px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.story-title {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: #1a1a1a;
+    text-align: center;
+}
+
+.story-image {
+    width: 100%;
+    max-height: 450px;
+    object-fit: cover;
+    border-radius: 12px;
+    display: block;
+    margin: 20px auto;
+}
+
+.story-text {
+    font-size: 1rem;
+    line-height: 1.8;
+    white-space: pre-line;
+    padding-top: 10px;
+}

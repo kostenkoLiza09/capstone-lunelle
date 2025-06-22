@@ -1,5 +1,6 @@
 package org.example.backend.security;
 
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -13,14 +14,15 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
+                .csrf(csrf -> csrf
+                        .ignoringRequestMatchers("/api/**")// NOSONAR: disabling CSRF for REST API token-based auth
+                )
                 .authorizeHttpRequests(a -> a
                         .requestMatchers("/api/auth/me").authenticated()
-                        .requestMatchers("/oauth2/**").authenticated()
+                        .requestMatchers("/api/secured").authenticated()
                         .anyRequest().permitAll()
                 )
-                .oauth2Login(o -> o.defaultSuccessUrl("https://capstone-lunelle-latest.onrender.com/"))
-                .logout(l -> l.logoutSuccessUrl("https://capstone-lunelle-latest.onrender.com/"));
-
+                .oauth2Login(o -> o.defaultSuccessUrl("http://localhost:5173"));
         return http.build();
     }
 
