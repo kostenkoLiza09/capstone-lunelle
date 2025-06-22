@@ -24,6 +24,8 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         return oauthUser;
     }
 
+
+
     protected AppUser createAndSaveUser(OAuth2User oauthUser) {
         AppUser newUser = new AppUser(
                 oauthUser.getName(),
