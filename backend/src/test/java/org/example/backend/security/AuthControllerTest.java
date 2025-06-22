@@ -8,7 +8,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.oidcLogin;
-
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 @SpringBootTest
 @AutoConfigureMockMvc
 class AuthControllerTest {
@@ -21,7 +21,7 @@ class AuthControllerTest {
                         .with(oidcLogin().userInfoToken(token -> token
                                 .claim("login", "testUser"))))
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.content().string("testUser"));
+                .andExpect(jsonPath("$.username").value("testUser"));
     }
 
 }
