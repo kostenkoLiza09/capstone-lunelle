@@ -1,5 +1,6 @@
 package org.example.backend.security;
 
+import org.example.backend.model.dto.AppUserDto;
 import org.example.backend.model.record.AppUser;
 import org.example.backend.repository.UserRepository;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -16,37 +17,56 @@ public class AuthController {
     }
 
     @GetMapping("/me")
-    public AppUser getMe(@AuthenticationPrincipal OAuth2User oauthUser) {
-
+    public AppUserDto getMe(@AuthenticationPrincipal OAuth2User oauthUser) {
         String id = oauthUser.getName();
 
-
-        return userRepo.findById(id)
+        AppUser user = userRepo.findById(id)
                 .orElseGet(() -> new AppUser(
                         id,
                         oauthUser.getAttribute("login"),
                         oauthUser.getAttribute("avatar_url"),
                         null, null, null, null, null));
+
+        return new AppUserDto(
+                user.username(),
+                user.avatarUrl(),
+                user.firstName(),
+                user.lastName(),
+                user.city(),
+                user.address(),
+                user.phoneNumber()
+        );
     }
 
+
     @PutMapping("/me")
-    public AppUser updateMe(@AuthenticationPrincipal OAuth2User oauthUser,
-                            @RequestBody AppUser updatedUser) {
+    public AppUserDto updateMe(@AuthenticationPrincipal OAuth2User oauthUser,
+                               @RequestBody AppUserDto updatedUserDto) {
         String id = oauthUser.getName();
-        return userRepo.findById(id)
-                .map(existingUser -> {
-                    AppUser userToSave = new AppUser(
-                            existingUser.id(),
-                            updatedUser.username() != null ? updatedUser.username() : existingUser.username(),
-                            updatedUser.avatarUrl() != null ? updatedUser.avatarUrl() : existingUser.avatarUrl(),
-                            updatedUser.firstName() != null ? updatedUser.firstName() : existingUser.firstName(),
-                            updatedUser.lastName() != null ? updatedUser.lastName() : existingUser.lastName(),
-                            updatedUser.city() != null ? updatedUser.city() : existingUser.city(),
-                            updatedUser.address() != null ? updatedUser.address() : existingUser.address(),
-                            updatedUser.phoneNumber() != null ? updatedUser.phoneNumber() : existingUser.phoneNumber()
-                    );
-                    return userRepo.save(userToSave);
-                })
+
+        AppUser updatedUser = userRepo.findById(id)
+                .map(existingUser -> new AppUser(
+                        existingUser.id(),
+                        updatedUserDto.username() != null ? updatedUserDto.username() : existingUser.username(),
+                        updatedUserDto.avatarUrl() != null ? updatedUserDto.avatarUrl() : existingUser.avatarUrl(),
+                        updatedUserDto.firstName() != null ? updatedUserDto.firstName() : existingUser.firstName(),
+                        updatedUserDto.lastName() != null ? updatedUserDto.lastName() : existingUser.lastName(),
+                        updatedUserDto.city() != null ? updatedUserDto.city() : existingUser.city(),
+                        updatedUserDto.address() != null ? updatedUserDto.address() : existingUser.address(),
+                        updatedUserDto.phoneNumber() != null ? updatedUserDto.phoneNumber() : existingUser.phoneNumber()
+                ))
+                .map(userRepo::save)
                 .orElseThrow(() -> new RuntimeException("User not found"));
+
+        return new AppUserDto(
+                updatedUser.username(),
+                updatedUser.avatarUrl(),
+                updatedUser.firstName(),
+                updatedUser.lastName(),
+                updatedUser.city(),
+                updatedUser.address(),
+                updatedUser.phoneNumber()
+        );
     }
+
 }
