@@ -1,6 +1,7 @@
 package org.example.backend.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.example.backend.model.dto.CartItemDto;
 import org.example.backend.model.record.CartItem;
 
 import org.example.backend.service.CartService;
@@ -17,10 +18,31 @@ public class CartController {
     private final CartService cartService;
 
     @PostMapping("/add")
-    public ResponseEntity<CartItem> addToCart(@RequestBody CartItem cartItem) {
+    public ResponseEntity<CartItemDto> addToCart(@RequestBody CartItemDto cartItemDto) {
+        CartItem cartItem = new CartItem(
+                cartItemDto.id(),
+                cartItemDto.userId(),
+                cartItemDto.productId(),
+                cartItemDto.quantity(),
+                0,
+                0,
+                null,
+                null
+        );
+
         CartItem saved = cartService.addToCart(cartItem);
-        return ResponseEntity.ok(saved);
+
+        CartItemDto responseDto = new CartItemDto(
+                saved.getId(),
+                saved.getUserId(),
+                saved.getProductId(),
+                saved.getQuantity()
+        );
+
+        return ResponseEntity.ok(responseDto);
     }
+
+
 
     @GetMapping("/{userId}")
     public List<CartItem> getCart(@PathVariable String userId) {
